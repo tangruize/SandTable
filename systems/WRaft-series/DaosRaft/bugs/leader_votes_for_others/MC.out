@@ -1,0 +1,190 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.16 of Day Month 20?? (rev: ${git.shortRevision})
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 121 and seed -395568649184714576 with 20 workers on 20 cores with 9406MB heap and 21162MB offheap memory [pid: 2744965] (Linux 6.2.0-26-generic amd64, Red Hat, Inc. 11.0.20 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module Integers
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Folds
+Semantic processing of module Functions
+Semantic processing of module FiniteSetsExt
+Semantic processing of module SequencesExt
+Semantic processing of module FifoNetwork
+Semantic processing of module DaosRaft
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2024-03-18 20:43:33)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2024-03-18 20:43:34.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant inv_VoteAssertions is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ msgs = (n1 :> (n2 :> <<>>) @@ n2 :> (n1 :> <<>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = <<<<"Init", 2>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 0, no_inv |-> {}, n_sent |-> 0, n_recv |-> 0, n_wire |-> 0, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 0 @@ n2 :> 0)
+/\ voted_for_me = (n1 :> {} @@ n2 :> {})
+/\ state = (n1 :> Follower @@ n2 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <DoBecomePrecandidate line 768, col 5 to line 770, col 25 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_RV, body |-> [term |-> 0, prevote |-> TRUE, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0]]>>) @@ n2 :> (n1 :> <<>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = <<<<"BecomePrecandidate", n1>>, <<"msg_batch_add", <<"ok", n1, n2>>>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 1, n_recv |-> 0, n_wire |-> 1, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 0 @@ n2 :> 0)
+/\ voted_for_me = (n1 :> {n1} @@ n2 :> {})
+/\ state = (n1 :> PreCandidate @@ n2 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <DoRecvRequestVote line 759, col 22 to line 759, col 55 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, body |-> [term |-> 0, prevote |-> TRUE, vote_granted |-> TRUE], status |-> "voted"]>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = <<<<"RecvRequestVote", "voted", n2, n1, "prevote">>, <<"msg_reply", n2, n1>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 2, n_recv |-> 1, n_wire |-> 1, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 0 @@ n2 :> 0)
+/\ voted_for_me = (n1 :> {n1} @@ n2 :> {})
+/\ state = (n1 :> PreCandidate @@ n2 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <DoRecvRequestVoteResponse line 761, col 30 to line 761, col 72 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_RV, body |-> [term |-> 1, prevote |-> FALSE, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0]]>>) @@ n2 :> (n1 :> <<>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = << <<"RecvRequestVoteResponse", "BecomeCandidate", n1>>,
+   <<"msg_batch_add_reply", n1, n2, <<"msg_batch_add", <<"ok", n1, n2>>>>>> >>
+/\ voted_for = (n1 :> n1 @@ n2 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 3, n_recv |-> 2, n_wire |-> 1, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 0)
+/\ voted_for_me = (n1 :> {n1} @@ n2 :> {})
+/\ state = (n1 :> Candidate @@ n2 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <DoRecvRequestVote line 759, col 22 to line 759, col 55 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, body |-> [term |-> 1, prevote |-> FALSE, vote_granted |-> TRUE], status |-> "voted"]>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = << <<"RecvRequestVote", "voted", n2, n1, "not-prevote">>,
+   <<"msg_reply", n2, n1>> >>
+/\ voted_for = (n1 :> n1 @@ n2 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 4, n_recv |-> 3, n_wire |-> 1, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 1)
+/\ voted_for_me = (n1 :> {n1} @@ n2 :> {})
+/\ state = (n1 :> Candidate @@ n2 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <DoRecvRequestVoteResponse line 761, col 30 to line 761, col 72 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, body |-> [term |-> 1, entries |-> <<>>, prev_log_idx |-> 0, leader_commit |-> 0, prev_log_term |-> 0]]>>) @@ n2 :> (n1 :> <<>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = << <<"RecvRequestVoteResponse", "BecomeLeader", n1>>,
+   <<"msg_batch_add_reply", n1, n2, <<"msg_batch_add", <<"ok", n1, n2>>>>>> >>
+/\ voted_for = (n1 :> n1 @@ n2 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 5, n_recv |-> 4, n_wire |-> 1, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 1)
+/\ voted_for_me = (n1 :> {n1, n2} @@ n2 :> {})
+/\ state = (n1 :> Leader @@ n2 :> Follower)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <DoBecomePrecandidate line 768, col 5 to line 770, col 25 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, body |-> [term |-> 1, entries |-> <<>>, prev_log_idx |-> 0, leader_commit |-> 0, prev_log_term |-> 0]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RV, body |-> [term |-> 1, prevote |-> TRUE, candidate_id |-> n2, last_log_idx |-> 0, last_log_term |-> 0]]>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = <<<<"BecomePrecandidate", n2>>, <<"msg_batch_add", <<"ok", n2, n1>>>>>>
+/\ voted_for = (n1 :> n1 @@ n2 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 6, n_recv |-> 4, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 1)
+/\ voted_for_me = (n1 :> {n1, n2} @@ n2 :> {n2})
+/\ state = (n1 :> Leader @@ n2 :> PreCandidate)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <DoRecvRequestVote line 759, col 22 to line 759, col 55 of module DaosRaft>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, body |-> [term |-> 1, entries |-> <<>>, prev_log_idx |-> 0, leader_commit |-> 0, prev_log_term |-> 0]], [src |-> n1, dst |-> n2, type |-> M_RVR, body |-> [term |-> 1, prevote |-> TRUE, vote_granted |-> TRUE], status |-> "voted"]>>) @@ n2 :> (n1 :> <<>>))
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0)
+/\ next_idx = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ match_idx = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ netcmd = <<<<"RecvRequestVote", "voted", n1, n2, "prevote">>, <<"msg_reply", n1, n2>>>>
+/\ voted_for = (n1 :> n1 @@ n2 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 7, n_recv |-> 5, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 1)
+/\ voted_for_me = (n1 :> {n1, n2} @@ n2 :> {n2})
+/\ state = (n1 :> Leader @@ n2 :> PreCandidate)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(11) at 2024-03-18 20:43:35: 473 states generated (10,840 s/min), 339 distinct states found (7,769 ds/min), 143 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+473 states generated, 339 distinct states found, 143 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 11.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 2642ms at (2024-03-18 20:43:35)
+@!@!@ENDMSG 2186 @!@!@

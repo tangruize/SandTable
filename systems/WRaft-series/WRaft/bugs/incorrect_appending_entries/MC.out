@@ -1,0 +1,1511 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.18 of Day Month 20?? (rev: ${git.shortRevision})
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 71 and seed 6547705995575721363 with 20 workers on 20 cores with 9481MB heap and 21332MB offheap memory [pid: 2477048] (Linux 6.2.0-26-generic amd64, Red Hat, Inc. 11.0.20 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module WillemtRaft
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2023-09-18 17:44:39)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2023-09-18 17:44:40.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(13) at 2023-09-18 17:44:43: 53,479 states generated (53,479 s/min), 18,182 distinct states found (18,182 ds/min), 10,823 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(18) at 2023-09-18 17:45:43: 2,322,345 states generated (2,268,866 s/min), 611,544 distinct states found (593,362 ds/min), 288,360 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(19) at 2023-09-18 17:46:43: 4,545,230 states generated (2,222,885 s/min), 1,261,936 distinct states found (650,392 ds/min), 624,437 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(20) at 2023-09-18 17:47:43: 6,918,839 states generated (2,373,609 s/min), 1,968,508 distinct states found (706,572 ds/min), 990,507 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(20) at 2023-09-18 17:48:43: 9,158,588 states generated (2,239,749 s/min), 2,577,516 distinct states found (609,008 ds/min), 1,281,281 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(21) at 2023-09-18 17:49:43: 11,596,583 states generated (2,437,995 s/min), 3,360,583 distinct states found (783,067 ds/min), 1,706,910 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(21) at 2023-09-18 17:50:43: 14,104,359 states generated (2,507,776 s/min), 4,069,582 distinct states found (708,999 ds/min), 2,047,890 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(21) at 2023-09-18 17:51:43: 16,532,282 states generated (2,427,923 s/min), 4,661,100 distinct states found (591,518 ds/min), 2,281,467 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(22) at 2023-09-18 17:52:43: 19,183,382 states generated (2,651,100 s/min), 5,415,023 distinct states found (753,923 ds/min), 2,646,298 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant inv_CommittedLogReplicatedMajority is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"Init">>,
+  nSent |-> 0,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 0,
+  nWire |-> 0,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 0,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 0,
+  nCont |-> 0,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Follower @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = {}
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <DoTimeout line 1444, col 36 to line 1445, col 46 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"Timeout: election", n1>>,
+  nSent |-> 2,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 0,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 0,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> Nil @@ n3 :> Nil)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 1,
+    type |-> RequestVoteRequest,
+    body |->
+        [term |-> 1, candidate |-> n1, lastLogIdx |-> 0, lastLogTerm |-> 0],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 2,
+    type |-> RequestVoteRequest,
+    body |->
+        [term |-> 1, candidate |-> n1, lastLogIdx |-> 0, lastLogTerm |-> 0],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <DoHandleRequestVoteRequest line 1434, col 36 to line 1435, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleRequestVoteRequest: granted", n2, n1, 1, 3, TRUE>>,
+  nSent |-> 3,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 1,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 1,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> Nil)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 2,
+    type |-> RequestVoteRequest,
+    body |->
+        [term |-> 1, candidate |-> n1, lastLogIdx |-> 0, lastLogTerm |-> 0],
+    to |-> n3,
+    from |-> n1 ],
+  [ seq |-> 3,
+    type |-> RequestVoteResponse,
+    body |-> [term |-> 1, voteGranted |-> TRUE],
+    to |-> n1,
+    from |-> n2 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <DoHandleRequestVoteRequest line 1434, col 36 to line 1435, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleRequestVoteRequest: granted", n3, n1, 2, 4, TRUE>>,
+  nSent |-> 4,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 2,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 2,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 3,
+    type |-> RequestVoteResponse,
+    body |-> [term |-> 1, voteGranted |-> TRUE],
+    to |-> n1,
+    from |-> n2 ],
+  [ seq |-> 4,
+    type |-> RequestVoteResponse,
+    body |-> [term |-> 1, voteGranted |-> TRUE],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <DoHandleRequestVoteResponse line 1436, col 36 to line 1437, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleRequestVoteResponse: promote", n1, n2, 3, TRUE>>,
+  nSent |-> 6,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 3,
+  nWire |-> 3,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 3,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 4,
+    type |-> RequestVoteResponse,
+    body |-> [term |-> 1, voteGranted |-> TRUE],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 5,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 6,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n2, n1, 5, 7, TRUE>>,
+  nSent |-> 7,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 4,
+  nWire |-> 3,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 4,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 4,
+    type |-> RequestVoteResponse,
+    body |-> [term |-> 1, voteGranted |-> TRUE],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 6,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ],
+  [ seq |-> 7,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n2 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <DoHandleRequestVoteResponse line 1436, col 36 to line 1437, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleRequestVoteResponse: not candidate", n1, n3, 4, FALSE>>,
+  nSent |-> 7,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 5,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 5,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 6,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ],
+  [ seq |-> 7,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n2 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n3, n1, 6, 8, TRUE>>,
+  nSent |-> 8,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 6,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 6,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 7,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n2 ],
+  [ seq |-> 8,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <DoHandleAppendEntriesResponse line 1432, col 36 to line 1433, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesResponse: stale msg", n1, n2, 7, Nil, FALSE>>,
+  nSent |-> 8,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 7,
+  nWire |-> 1,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 0,
+  nAe |-> 0,
+  nLog |-> 0,
+  maxTerm |-> 1,
+  nCont |-> 7,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 8,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+10: <DoClientRequest line 1442, col 36 to line 1443, col 55 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"ClientRequest", n1, v1>>,
+  nSent |-> 10,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 7,
+  nWire |-> 3,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 1,
+  nAe |-> 0,
+  nLog |-> 1,
+  maxTerm |-> 1,
+  nCont |-> 8,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n2 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 8,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 9,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 10,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = (n1 :> <<[term |-> 1, value |-> v1]>> @@ n2 :> <<>> @@ n3 :> <<>>)
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+11: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n2, n1, 9, 11, TRUE>>,
+  nSent |-> 11,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 8,
+  nWire |-> 3,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 1,
+  nAe |-> 0,
+  nLog |-> 1,
+  maxTerm |-> 1,
+  nCont |-> 9,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 0, base |-> 0, front |-> 0, size |-> 10, back |-> 0] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 8,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 10,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 0,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ],
+  [ seq |-> 11,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n2 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+12: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n3, n1, 10, 12, TRUE>>,
+  nSent |-> 12,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 9,
+  nWire |-> 3,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 1,
+  nAe |-> 0,
+  nLog |-> 1,
+  maxTerm |-> 1,
+  nCont |-> 10,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 8,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 0],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 11,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n2 ],
+  [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+13: <DoHandleAppendEntriesResponse line 1432, col 36 to line 1433, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesResponse: stale msg", n1, n3, 8, Nil, FALSE>>,
+  nSent |-> 12,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 10,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 1,
+  nAe |-> 0,
+  nLog |-> 1,
+  maxTerm |-> 1,
+  nCont |-> 11,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 11,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n2 ],
+  [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+14: <DoHandleAppendEntriesResponse line 1432, col 36 to line 1433, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesResponse: success", n1, n2, 11, Nil, TRUE>>,
+  nSent |-> 12,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 11,
+  nWire |-> 1,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 1,
+  nAe |-> 0,
+  nLog |-> 1,
+  maxTerm |-> 1,
+  nCont |-> 12,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+15: <DoClientRequest line 1442, col 36 to line 1443, col 55 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"ClientRequest", n1, v1>>,
+  nSent |-> 13,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 11,
+  nWire |-> 2,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 2,
+  nAe |-> 0,
+  nLog |-> 2,
+  maxTerm |-> 1,
+  nCont |-> 13,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+16: <DoAppendEntriesAll line 1440, col 36 to line 1441, col 55 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"AppendEntriesAll", n1>>,
+  nSent |-> 15,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 11,
+  nWire |-> 4,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 2,
+  nAe |-> 1,
+  nLog |-> 2,
+  maxTerm |-> 1,
+  nCont |-> 14,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 15,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+17: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n3, n1, 15, 16, TRUE>>,
+  nSent |-> 16,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 12,
+  nWire |-> 4,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 2,
+  nAe |-> 1,
+  nLog |-> 2,
+  maxTerm |-> 1,
+  nCont |-> 15,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+18: <DoClientRequest line 1442, col 36 to line 1443, col 55 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"ClientRequest", n1, v2>>,
+  nSent |-> 16,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 12,
+  nWire |-> 4,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 3,
+  nAe |-> 1,
+  nLog |-> 3,
+  maxTerm |-> 1,
+  nCont |-> 16,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 3, base |-> 0, front |-> 0, size |-> 10, back |-> 3] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+19: <DoAppendEntriesAll line 1440, col 36 to line 1441, col 55 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ scr = [ pc |-> <<"AppendEntriesAll", n1>>,
+  nSent |-> 18,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 12,
+  nWire |-> 6,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 3,
+  nAe |-> 2,
+  nLog |-> 3,
+  maxTerm |-> 1,
+  nCont |-> 17,
+  nSnapshot |-> 0 ]
+/\ logInfo = ( n1 :> [count |-> 3, base |-> 0, front |-> 0, size |-> 10, back |-> 3] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 2, base |-> 0, front |-> 0, size |-> 10, back |-> 2] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 17,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v2]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 18,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              << [term |-> 1, value |-> v1],
+                 [term |-> 1, value |-> v1],
+                 [term |-> 1, value |-> v2] >>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = ( n1 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+20: <DoSnapshot line 1452, col 36 to line 1453, col 51 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ scr = [ pc |-> <<"ExecSnapshot: not leader", n3, 1>>,
+  nSent |-> 18,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 12,
+  nWire |-> 6,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 3,
+  nAe |-> 2,
+  nLog |-> 3,
+  maxTerm |-> 1,
+  nCont |-> 18,
+  nSnapshot |-> 1 ]
+/\ logInfo = ( n1 :> [count |-> 3, base |-> 0, front |-> 0, size |-> 10, back |-> 3] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 1, base |-> 1, front |-> 1, size |-> 10, back |-> 2] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 17,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v2]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 18,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              << [term |-> 1, value |-> v1],
+                 [term |-> 1, value |-> v1],
+                 [term |-> 1, value |-> v2] >>,
+          prevLogIdx |-> 0,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 0 ],
+    to |-> n3,
+    from |-> n1 ] }
+/\ log = ( n1 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :> <<[term |-> 1, value |-> v1]>> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+21: <DoHandleAppendEntriesRequest line 1430, col 36 to line 1431, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ scr = [ pc |-> <<"HandleAppendEntriesRequest: success", n3, n1, 18, 19, TRUE>>,
+  nSent |-> 19,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 13,
+  nWire |-> 6,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 0,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 3,
+  nAe |-> 2,
+  nLog |-> 4,
+  maxTerm |-> 1,
+  nCont |-> 19,
+  nSnapshot |-> 1 ]
+/\ logInfo = ( n1 :> [count |-> 3, base |-> 0, front |-> 0, size |-> 10, back |-> 3] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 4, base |-> 1, front |-> 1, size |-> 10, back |-> 5] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 17,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v2]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 19,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 3],
+    to |-> n1,
+    from |-> n3 ] }
+/\ log = ( n1 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+22: <DoHandleAppendEntriesResponse line 1432, col 36 to line 1433, col 80 of module WillemtRaft>
+/\ snapshotLastIdx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ scr = [ pc |-> <<"HandleAppendEntriesResponse: success", n1, n3, 19, Nil, TRUE>>,
+  nSent |-> 19,
+  lock |-> Nil,
+  partNodes |-> {},
+  nCure |-> 0,
+  inv |-> <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>,
+  noInv |-> {1, 2, 3, 4, 5},
+  nRecv |-> 14,
+  nWire |-> 5,
+  nDrop |-> 0,
+  nDup |-> 0,
+  nUnorder |-> 1,
+  nTimeout |-> 1,
+  nRestart |-> 0,
+  nOp |-> 3,
+  nAe |-> 2,
+  nLog |-> 4,
+  maxTerm |-> 1,
+  nCont |-> 20,
+  nSnapshot |-> 1 ]
+/\ logInfo = ( n1 :> [count |-> 3, base |-> 0, front |-> 0, size |-> 10, back |-> 3] @@
+  n2 :> [count |-> 1, base |-> 0, front |-> 0, size |-> 10, back |-> 1] @@
+  n3 :> [count |-> 4, base |-> 1, front |-> 1, size |-> 10, back |-> 5] )
+/\ snapshotLastTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 1)
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ nextIdx = ( n1 :> (n1 :> 1 @@ n2 :> 2 @@ n3 :> 4) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ commitIdx = (n1 :> 3 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ matchIdx = ( n1 :> (n1 :> 0 @@ n2 :> 1 @@ n3 :> 3) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ messages = { [ seq |-> 12,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 1],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 13,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 14,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |-> <<[term |-> 1, value |-> v1]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ],
+  [ seq |-> 16,
+    type |-> AppendEntriesResponse,
+    body |-> [term |-> 1, success |-> TRUE, curIdx |-> 2],
+    to |-> n1,
+    from |-> n3 ],
+  [ seq |-> 17,
+    type |-> AppendEntriesRequest,
+    body |->
+        [ term |-> 1,
+          entries |->
+              <<[term |-> 1, value |-> v1], [term |-> 1, value |-> v2]>>,
+          prevLogIdx |-> 1,
+          leaderCommit |-> 1,
+          prevLogTerm |-> 1 ],
+    to |-> n2,
+    from |-> n1 ] }
+/\ log = ( n1 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> @@
+  n2 :> <<[term |-> 1, value |-> v1]>> @@
+  n3 :>
+      << [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v1],
+         [term |-> 1, value |-> v2] >> )
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {} @@ n3 :> {})
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(22) at 2023-09-18 17:53:27: 20,999,199 states generated (2,384,159 s/min), 5,954,049 distinct states found (675,997 ds/min), 2,911,734 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+20999199 states generated, 5954049 distinct states found, 2911734 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 22.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 528470ms at (2023-09-18 17:53:27)
+@!@!@ENDMSG 2186 @!@!@

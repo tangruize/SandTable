@@ -1,0 +1,24 @@
+Version: https://github.com/bakwc/PySyncObj/releases/tag/0.3.11
+
+Config changes in config.py:
+
+```diff
+28c28
+<         self.autoTick = kwargs.get('autoTick', True)
+---
+>         self.autoTick = kwargs.get('autoTick', False)
+36c36
+<         self.raftMinTimeout = kwargs.get('raftMinTimeout', 0.4)
+---
+>         self.raftMinTimeout = kwargs.get('raftMinTimeout', 0.7)
+43c43
+<         self.appendEntriesPeriod = kwargs.get('appendEntriesPeriod', 0.1)
+---
+>         self.appendEntriesPeriod = kwargs.get('appendEntriesPeriod', 0.2)
+51c51
+<         self.connectionRetryTime = kwargs.get('connectionRetryTime', 5.0)
+---
+>         self.connectionRetryTime = kwargs.get('connectionRetryTime', 0.05)
+```
+
+Update [monotonic.py](https://github.com/atdt/monotonic) file to support time interception on OpenBSD.

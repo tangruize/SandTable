@@ -1,0 +1,23 @@
+# Global
+.idea
+.vscode
+*build*
+*cache*
+.*.swp
+venv
+
+# Generated
+config.txt
+traces.txt
+tlc_trace.txt
+*.csv
+
+# specs
+*.toolbox
+model
+*.dvi
+*.pdf
+**/specs/*.tex
+
+# docker
+*mount*

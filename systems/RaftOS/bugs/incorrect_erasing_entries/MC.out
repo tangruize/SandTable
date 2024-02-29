@@ -1,0 +1,228 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.18 of Day Month 20?? (rev: ${git.shortRevision})
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 58 and seed -3081590393111311266 with 20 workers on 20 cores with 9481MB heap and 21332MB offheap memory [pid: 2463766] (Linux 6.2.0-26-generic amd64, Red Hat, Inc. 11.0.20 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module Integers
+Semantic processing of module TLC
+Semantic processing of module UdpNetwork
+Semantic processing of module raftOs
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2023-09-18 15:04:57)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2023-09-18 15:04:59.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant inv_CommittedLogReplicatedMajority is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Follower @@ n2 :> Follower)
+/\ netcmd = <<<<"Init", 2>>>>
+/\ msgs = {}
+/\ netman = [n_elec |-> 0, n_ae |-> 0, n_op |-> 0, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 0, n_recv |-> 0, n_wire |-> 0]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<>>
+/\ currentTerm = (n1 :> 0 @@ n2 :> 0)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {} @@ n2 :> {})
+/\ votedFor = (n1 :> Nil @@ n2 :> Nil)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <DoElectionTimeout line 809, col 5 to line 811, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower)
+/\ netcmd = <<<<"ElectionTimeout", n1>>, <<"msg_batch_add", <<"ok", 1, n1, n2>>>>>>
+/\ msgs = { [ src |-> n1,
+    dst |-> n2,
+    type |-> RV,
+    data |-> [term |-> 1, lastLogIdx |-> 0, lastLogTerm |-> 0],
+    seq |-> 1 ] }
+/\ netman = [n_elec |-> 1, n_ae |-> 0, n_op |-> 0, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 1, n_recv |-> 0, n_wire |-> 1]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 0)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> Nil)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <DoHandleMsgRV line 777, col 5 to line 781, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower)
+/\ netcmd = <<<<"HandleMsgRV", "msg valid", n1, n2, 1>>, <<"msg_reply", 1, n1, n2>>>>
+/\ msgs = { [ src |-> n2,
+    dst |-> n1,
+    type |-> RVR,
+    data |-> [term |-> 1, voteGranted |-> TRUE, success |-> TRUE],
+    seq |-> 2 ] }
+/\ netman = [n_elec |-> 1, n_ae |-> 0, n_op |-> 0, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 2, n_recv |-> 1, n_wire |-> 1]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <DoHandleMsgRVR line 785, col 5 to line 788, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"HandleMsgRVR", "pormote", n2, n1, 2>>, <<"msg_del", 2, n2, n1>>>>
+/\ msgs = {}
+/\ netman = [n_elec |-> 1, n_ae |-> 0, n_op |-> 0, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 2, n_recv |-> 2, n_wire |-> 0]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <DoSendAppendEntries line 820, col 5 to line 824, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"SendAppendEntries", n1>>, <<"msg_batch_add", <<"ok", 3, n1, n2>>>>>>
+/\ msgs = { [ src |-> n1,
+    dst |-> n2,
+    type |-> AE,
+    data |->
+        [ commitIndex |-> 0,
+          term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          prevLogTerm |-> 0 ],
+    seq |-> 3 ] }
+/\ netman = [n_elec |-> 1, n_ae |-> 1, n_op |-> 0, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 3, n_recv |-> 2, n_wire |-> 1]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <DoClientRequest line 814, col 5 to line 817, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<[term |-> 1, idx |-> 1, cmd |-> v1]>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"ClientRequest", n1, v1>>, <<"msg_batch_add", <<"ok", 4, n1, n2>>>>>>
+/\ msgs = { [ src |-> n1,
+    dst |-> n2,
+    type |-> AE,
+    data |->
+        [ commitIndex |-> 0,
+          term |-> 1,
+          entries |-> <<>>,
+          prevLogIdx |-> 0,
+          prevLogTerm |-> 0 ],
+    seq |-> 3 ],
+  [ src |-> n1,
+    dst |-> n2,
+    type |-> AE,
+    data |->
+        [ commitIndex |-> 0,
+          term |-> 1,
+          entries |-> <<[term |-> 1, idx |-> 1, cmd |-> v1]>>,
+          prevLogIdx |-> 0,
+          prevLogTerm |-> 0 ],
+    seq |-> 4 ] }
+/\ netman = [n_elec |-> 1, n_ae |-> 1, n_op |-> 1, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 4, n_recv |-> 2, n_wire |-> 2]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <DoHandleMsgAE line 791, col 5 to line 795, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = ( n1 :> <<[term |-> 1, idx |-> 1, cmd |-> v1]>> @@
+  n2 :> <<[term |-> 1, idx |-> 1, cmd |-> v1]>> )
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"HandleMsgAE", "success", n1, n2, 4>>, <<"msg_reply", 4, n1, n2>>>>
+/\ msgs = {[src |-> n1, dst |-> n2, type |-> AE, data |-> [commitIndex |-> 0, term |-> 1, entries |-> <<>>, prevLogIdx |-> 0, prevLogTerm |-> 0], seq |-> 3], [src |-> n2, dst |-> n1, type |-> AER, data |-> [term |-> 1, success |-> TRUE, last_log_index |-> 1], seq |-> 5]}
+/\ netman = [n_elec |-> 1, n_ae |-> 1, n_op |-> 1, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 5, n_recv |-> 3, n_wire |-> 2]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <DoHandleMsgAE line 791, col 5 to line 795, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 0) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<[term |-> 1, idx |-> 1, cmd |-> v1]>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"HandleMsgAE", "success", n1, n2, 3>>, <<"msg_reply", 3, n1, n2>>>>
+/\ msgs = {[src |-> n2, dst |-> n1, type |-> AER, data |-> [term |-> 1, success |-> TRUE, last_log_index |-> 0], seq |-> 6], [src |-> n2, dst |-> n1, type |-> AER, data |-> [term |-> 1, success |-> TRUE, last_log_index |-> 1], seq |-> 5]}
+/\ netman = [n_elec |-> 1, n_ae |-> 1, n_op |-> 1, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 6, n_recv |-> 4, n_wire |-> 2]
+/\ commitIndex = (n1 :> 0 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 1) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <DoHandleMsgAER line 798, col 5 to line 801, col 25 of module raftOs>
+/\ matchIndex = (n1 :> (n1 :> 0 @@ n2 :> 1) @@ n2 :> (n1 :> 0 @@ n2 :> 0))
+/\ log = (n1 :> <<[term |-> 1, idx |-> 1, cmd |-> v1]>> @@ n2 :> <<>>)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower)
+/\ netcmd = <<<<"HandleMsgAER", "success", n2, n1, 5>>, <<"msg_del", 5, n2, n1>>>>
+/\ msgs = {[src |-> n2, dst |-> n1, type |-> AER, data |-> [term |-> 1, success |-> TRUE, last_log_index |-> 0], seq |-> 6]}
+/\ netman = [n_elec |-> 1, n_ae |-> 1, n_op |-> 1, no_inv |-> {}, n_drop |-> 0, n_dup |-> 0, n_sent |-> 6, n_recv |-> 5, n_wire |-> 1]
+/\ commitIndex = (n1 :> 1 @@ n2 :> 0)
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1)
+/\ nextIndex = (n1 :> (n1 :> 1 @@ n2 :> 2) @@ n2 :> (n1 :> 1 @@ n2 :> 1))
+/\ votesGranted = (n1 :> {n1, n2} @@ n2 :> {})
+/\ votedFor = (n1 :> n1 @@ n2 :> n1)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(10) at 2023-09-18 15:05:01: 31,147 states generated (526,131 s/min), 19,455 distinct states found (328,631 ds/min), 15,325 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+31147 states generated, 19455 distinct states found, 15325 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 10.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 3556ms at (2023-09-18 15:05:01)
+@!@!@ENDMSG 2186 @!@!@

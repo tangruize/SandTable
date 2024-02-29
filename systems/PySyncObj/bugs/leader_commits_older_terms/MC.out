@@ -1,0 +1,405 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.18 of Day Month 20?? (rev: ${git.shortRevision})
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 122 and seed -6689989529468699845 with 20 workers on 20 cores with 9481MB heap and 21332MB offheap memory [pid: 2459516] (Linux 6.2.0-26-generic amd64, Red Hat, Inc. 11.0.20 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module Integers
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Folds
+Semantic processing of module Functions
+Semantic processing of module FiniteSetsExt
+Semantic processing of module SequencesExt
+Semantic processing of module FifoNetwork
+Semantic processing of module PySyncObj
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2023-09-18 14:04:50)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2023-09-18 14:04:52.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(16) at 2023-09-18 14:04:55: 77,808 states generated (77,808 s/min), 42,591 distinct states found (42,591 ds/min), 27,654 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(20) at 2023-09-18 14:05:55: 2,805,080 states generated (2,727,272 s/min), 1,313,081 distinct states found (1,270,490 ds/min), 828,230 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant inv_INV is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ msgs = ( n1 :> (n2 :> <<>> @@ n3 :> <<>>) @@
+  n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@
+  n3 :> (n1 :> <<>> @@ n2 :> <<>>) )
+/\ inv = <<>>
+/\ votesCount = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ raftState = (n1 :> Follower @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = <<<<"init", 3>>>>
+/\ nextIndex = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 0, no_inv |-> {}, n_sent |-> 0, n_recv |-> 0, n_wire |-> 0, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ votedFor = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <DoElectionTimeout line 618, col 5 to line 620, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_RV, data |-> [term |-> 1, lastLogTerm |-> 0, lastLogIdx |-> 1]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 1, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = << <<"ElectionTimeout", n1>>,
+   <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >>
+/\ nextIndex = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 2, n_recv |-> 0, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ votedFor = (n1 :> n1 @@ n2 :> Nil @@ n3 :> Nil)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <DoHandleMsgRV line 582, col 5 to line 588, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 1, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]]>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgRV", "voted", n2, n1>>, <<"msg_reply", n2, n1>>>>
+/\ nextIndex = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 3, n_recv |-> 1, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> Nil)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <DoElectionTimeout line 618, col 5 to line 620, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 1, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]], [src |-> n2, dst |-> n1, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = << <<"ElectionTimeout", n2>>,
+   <<"msg_batch_add", <<"ok", n2, n1>>, <<"ok", n2, n3>>>> >>
+/\ nextIndex = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 5, n_recv |-> 1, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 1 @@ n2 :> 2 @@ n3 :> 0)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> Nil)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <DoHandleMsgRV line 582, col 5 to line 588, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<>> @@ n3 :> <<>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]], [src |-> n2, dst |-> n1, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgRV", "voted", n3, n1>>, <<"msg_reply", n3, n1>>>>
+/\ nextIndex = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 6, n_recv |-> 2, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <DoHandleMsgRVR line 591, col 5 to line 597, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 2 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Leader @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = << <<"HandleMsgRVR", "become-leader-and-send-append-entries", n1, n2>>,
+   << "msg_batch_add_reply",
+      n1,
+      n2,
+      <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >> >>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 8, n_recv |-> 3, n_wire |-> 5, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 1 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <DoHandleMsgRV line 582, col 5 to line 588, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 2 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Follower @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgRV", "not-voted", n1, n2>>, <<"msg_del", n1, n2>>>>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 8, n_recv |-> 4, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 2 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> Nil @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <DoElectionTimeout line 618, col 5 to line 620, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n2, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_RVR, data |-> [term |-> 1]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = << <<"ElectionTimeout", n1>>,
+   <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 10, n_recv |-> 4, n_wire |-> 6, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <DoHandleMsgRVR line 591, col 5 to line 597, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n2, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = << <<"HandleMsgRVR", "not-candidate-or-term-not-equal", n1, n3>>,
+   <<"msg_del", n1, n3>> >>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 10, n_recv |-> 5, n_wire |-> 5, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+10: <DoHandleMsgAE line 600, col 5 to line 606, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Candidate @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgAE", "term-is-smaller", n2, n1>>, <<"msg_del", n2, n1>>>>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 10, n_recv |-> 6, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 2 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n2 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+11: <DoHandleMsgRV line 582, col 5 to line 588, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 1, entries |-> <<[cmd |-> NoOp, idx |-> 2, term |-> 1]>>, commitIdx |-> 1, prevLogIdx |-> 1, prevLogTerm |-> 0]], [src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, data |-> [term |-> 3]]>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgRV", "voted", n2, n1>>, <<"msg_reply", n2, n1>>>>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 11, n_recv |-> 7, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 3 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+12: <DoHandleMsgAE line 600, col 5 to line 606, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]]>>) @@ n2 :> (n1 :> <<[src |-> n2, dst |-> n1, type |-> M_RVR, data |-> [term |-> 3]]>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_NNI, data |-> [nextNodeIdx |-> 3, success |-> TRUE]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgAE", "success", n3, n1>>, <<"msg_reply", n3, n1>>>>
+/\ nextIndex = ( n1 :> (n1 :> 3 @@ n2 :> 3 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 12, n_recv |-> 8, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 3 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+13: <DoHandleMsgRVR line 591, col 5 to line 597, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 3, entries |-> <<[cmd |-> NoOp, idx |-> 3, term |-> 3]>>, commitIdx |-> 1, prevLogIdx |-> 2, prevLogTerm |-> 1]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]], [src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 3, entries |-> <<[cmd |-> NoOp, idx |-> 3, term |-> 3]>>, commitIdx |-> 1, prevLogIdx |-> 2, prevLogTerm |-> 1]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<[src |-> n3, dst |-> n1, type |-> M_NNI, data |-> [nextNodeIdx |-> 3, success |-> TRUE]]>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE>>
+/\ votesCount = (n1 :> 2 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = << <<"HandleMsgRVR", "become-leader-and-send-append-entries", n1, n2>>,
+   << "msg_batch_add_reply",
+      n1,
+      n2,
+      <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >> >>
+/\ nextIndex = ( n1 :> (n1 :> 4 @@ n2 :> 4 @@ n3 :> 4) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 14, n_recv |-> 9, n_wire |-> 5, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 3 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1],
+         [cmd |-> NoOp, idx |-> 3, term |-> 3] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+14: <DoHandleMsgNNI line 609, col 5 to line 615, col 25 of module PySyncObj>
+/\ msgs = (n1 :> (n2 :> <<[src |-> n1, dst |-> n2, type |-> M_AE, data |-> [term |-> 3, entries |-> <<[cmd |-> NoOp, idx |-> 3, term |-> 3]>>, commitIdx |-> 1, prevLogIdx |-> 2, prevLogTerm |-> 1]]>> @@ n3 :> <<[src |-> n1, dst |-> n3, type |-> M_RV, data |-> [term |-> 3, lastLogTerm |-> 1, lastLogIdx |-> 2]], [src |-> n1, dst |-> n3, type |-> M_AE, data |-> [term |-> 3, entries |-> <<[cmd |-> NoOp, idx |-> 3, term |-> 3]>>, commitIdx |-> 1, prevLogIdx |-> 2, prevLogTerm |-> 1]]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[src |-> n2, dst |-> n3, type |-> M_RV, data |-> [term |-> 2, lastLogTerm |-> 0, lastLogIdx |-> 1]]>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ inv = <<TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE>>
+/\ votesCount = (n1 :> 2 @@ n2 :> 1 @@ n3 :> 0)
+/\ raftState = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ netcmd = <<<<"HandleMsgNNI", "success", n1, n3>>, <<"msg_del", n1, n3>>>>
+/\ nextIndex = ( n1 :> (n1 :> 4 @@ n2 :> 4 @@ n3 :> 3) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 14, n_recv |-> 10, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ currentTerm = (n1 :> 3 @@ n2 :> 3 @@ n3 :> 1)
+/\ votedFor = (n1 :> n1 @@ n2 :> n1 @@ n3 :> n1)
+/\ matchIndex = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 2) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commitIndex = (n1 :> 2 @@ n2 :> 1 @@ n3 :> 1)
+/\ log = ( n1 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1],
+         [cmd |-> NoOp, idx |-> 3, term |-> 3] >> @@
+  n2 :> <<[cmd |-> NoOp, idx |-> 1, term |-> 0]>> @@
+  n3 :>
+      << [cmd |-> NoOp, idx |-> 1, term |-> 0],
+         [cmd |-> NoOp, idx |-> 2, term |-> 1] >> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(20) at 2023-09-18 14:06:50: 5,242,044 states generated (2,612,314 s/min), 2,364,779 distinct states found (1,178,461 ds/min), 1,460,631 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+5242044 states generated, 2364779 distinct states found, 1460631 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 20.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 120401ms at (2023-09-18 14:06:50)
+@!@!@ENDMSG 2186 @!@!@
