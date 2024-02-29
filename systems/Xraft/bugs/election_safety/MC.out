@@ -1,0 +1,350 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.18 of Day Month 20?? (rev: ${git.shortRevision})
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 25 and seed -4668253948453073319 with 16 workers on 20 cores with 5691MB heap and 12802MB offheap memory [pid: 1494192] (Linux 5.15.0-67-generic amd64, Oracle Corporation 19 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module Integers
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Folds
+Semantic processing of module Functions
+Semantic processing of module FiniteSetsExt
+Semantic processing of module SequencesExt
+Semantic processing of module FifoNetwork
+Semantic processing of module XRaft
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2023-04-27 21:49:34)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2023-04-27 21:49:37.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant inv_INV is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ msgs = ( n1 :> (n2 :> <<>> @@ n3 :> <<>>) @@
+  n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@
+  n3 :> (n1 :> <<>> @@ n2 :> <<>>) )
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = <<>>
+/\ votes_count = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = <<<<"Init", 3>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 0, no_inv |-> {}, n_sent |-> 0, n_recv |-> 0, n_wire |-> 0, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Follower @@ n2 :> Follower @@ n3 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <DoElectionTimeout line 706, col 5 to line 708, col 25 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 2]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = << <<"ElectionTimeout", n1>>,
+   <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 2, n_recv |-> 0, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <DoRecvRequestVote line 697, col 22 to line 697, col 55 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1]>> @@ n3 :> <<>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<[type |-> M_RVR, body |-> [term |-> 1, vote_granted |-> TRUE], status |-> "voted", seq |-> 3]>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = <<<<"RecvRequestVote", "voted", n3, n1>>, <<"msg_reply", n3, n1>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 1, no_inv |-> {}, n_sent |-> 3, n_recv |-> 1, n_wire |-> 2, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <DoElectionTimeout line 706, col 5 to line 708, col 25 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1], [type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 4]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 5]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<[type |-> M_RVR, body |-> [term |-> 1, vote_granted |-> TRUE], status |-> "voted", seq |-> 3]>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 1 @@ n2 :> 0 @@ n3 :> 0)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = << <<"ElectionTimeout", n1>>,
+   <<"msg_batch_add", <<"ok", n1, n2>>, <<"ok", n1, n3>>>> >>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 5, n_recv |-> 1, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Candidate @@ n2 :> Follower @@ n3 :> Follower)
+/\ leader_id = (n1 :> Nil @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <DoRecvRequestVoteResponse line 699, col 30 to line 699, col 72 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1], [type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 4]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 5]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 0)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = << <<"RecvRequestVoteResponse", "become leader", n1, n3>>,
+   <<"msg_del", n1, n3>> >>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 2, no_inv |-> {}, n_sent |-> 5, n_recv |-> 2, n_wire |-> 3, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 1)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Follower)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<[term |-> 2, data |-> Nil]>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <DoElectionTimeout line 706, col 5 to line 708, col 25 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1], [type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 4]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 5]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n3, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 6]>> @@ n2 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n3, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 7]>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 1)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = << <<"ElectionTimeout", n3>>,
+   <<"msg_batch_add", <<"ok", n3, n1>>, <<"ok", n3, n2>>>> >>
+/\ voted_for = (n1 :> Nil @@ n2 :> Nil @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 7, n_recv |-> 2, n_wire |-> 5, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 2)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Candidate)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<[term |-> 2, data |-> Nil]>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <DoRecvRequestVote line 697, col 22 to line 697, col 55 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1], [type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 4]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 5]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<[type |-> M_RVR, body |-> [term |-> 2, vote_granted |-> TRUE], status |-> "voted", seq |-> 8]>>) @@ n3 :> (n1 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n3, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 6]>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE >>
+/\ votes_count = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 1)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = <<<<"RecvRequestVote", "voted", n2, n3>>, <<"msg_reply", n2, n3>>>>
+/\ voted_for = (n1 :> Nil @@ n2 :> n3 @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 8, n_recv |-> 3, n_wire |-> 5, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 2 @@ n2 :> 2 @@ n3 :> 2)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Candidate)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil @@ n3 :> Nil)
+/\ log = (n1 :> <<[term |-> 2, data |-> Nil]>> @@ n2 :> <<>> @@ n3 :> <<>>)
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <DoRecvRequestVoteResponse line 699, col 30 to line 699, col 72 of module XRaft>
+/\ msgs = (n1 :> (n2 :> <<[type |-> M_RV, body |-> [term |-> 1, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 1], [type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 4]>> @@ n3 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n1, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 5]>>) @@ n2 :> (n1 :> <<>> @@ n3 :> <<>>) @@ n3 :> (n1 :> <<[type |-> M_RV, body |-> [term |-> 2, candidate_id |-> n3, last_log_idx |-> 0, last_log_term |-> 0], seq |-> 6]>> @@ n2 :> <<>>))
+/\ last_msg_id = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ commit_idx = (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0)
+/\ next_idx = ( n1 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n2 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) @@
+  n3 :> (n1 :> 1 @@ n2 :> 1 @@ n3 :> 1) )
+/\ inv = << FALSE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   TRUE,
+   FALSE,
+   TRUE >>
+/\ votes_count = (n1 :> 2 @@ n2 :> 0 @@ n3 :> 2)
+/\ match_idx = ( n1 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n2 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) @@
+  n3 :> (n1 :> 0 @@ n2 :> 0 @@ n3 :> 0) )
+/\ netcmd = << <<"RecvRequestVoteResponse", "become leader", n3, n2>>,
+   <<"msg_del", n3, n2>> >>
+/\ voted_for = (n1 :> Nil @@ n2 :> n3 @@ n3 :> n1)
+/\ netman = [n_op |-> 0, n_ae |-> 0, n_elec |-> 3, no_inv |-> {}, n_sent |-> 8, n_recv |-> 4, n_wire |-> 4, n_part |-> 0, n_cure |-> 0, conn |-> <<{n1, n2, n3}>>]
+/\ current_term = (n1 :> 2 @@ n2 :> 2 @@ n3 :> 2)
+/\ state = (n1 :> Leader @@ n2 :> Follower @@ n3 :> Leader)
+/\ leader_id = (n1 :> n1 @@ n2 :> Nil @@ n3 :> n3)
+/\ log = ( n1 :> <<[term |-> 2, data |-> Nil]>> @@
+  n2 :> <<>> @@
+  n3 :> <<[term |-> 2, data |-> Nil]>> )
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(13) at 2023-04-27 21:49:38: 3,650 states generated (48,419 s/min), 2,975 distinct states found (39,464 ds/min), 2,086 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+3650 states generated, 2975 distinct states found, 2086 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 13.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 4528ms at (2023-04-27 21:49:38)
+@!@!@ENDMSG 2186 @!@!@

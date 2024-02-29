@@ -1,0 +1,64 @@
+version: '3.9'
+services:
+  controller: &copy
+    build: &build
+      context: .
+      dockerfile: Dockerfile
+      target: controller
+    image: sandtable-controller:latest
+    container_name: controller
+    hostname: controller
+    volumes:
+      - ../build/mount:/root/sandtable
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      sandtable:
+        ipv4_address: 10.255.255.100
+  node1: &node
+    <<: *copy
+    container_name: n1
+    hostname: n1
+    build:
+      <<: *build
+      target: node
+    image: sandtable-node:latest
+    networks:
+      sandtable:
+        ipv4_address: 10.255.255.101
+  node2:
+    <<: *node
+    container_name: n2
+    hostname: n2
+    networks:
+      sandtable:
+        ipv4_address: 10.255.255.102
+  node3:
+    <<: *node
+    container_name: n3
+    hostname: n3
+    networks:
+      sandtable:
+        ipv4_address: 10.255.255.103
+#  node4:
+#    <<: *node
+#    container_name: n4
+#    hostname: n4
+#    networks:
+#      sandtable:
+#        ipv4_address: 10.255.255.104
+#  node5:
+#    <<: *node
+#    container_name: n5
+#    hostname: n5
+#    networks:
+#      sandtable:
+#        ipv4_address: 10.255.255.105
+networks:
+  sandtable:
+    name: sandtable
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.255.255.0/24

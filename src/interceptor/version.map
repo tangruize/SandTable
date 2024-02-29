@@ -1,0 +1,36 @@
+{
+    global:
+        # expose some symbols of the library (for ptracer)
+        reg_func_dict;
+        print_info_internal;
+        # below are intercepted functions
+        #open;
+        send;
+        sendto;
+        socket;
+        accept;
+        connect;
+        close;
+        write;
+        #free;
+        #malloc;
+        #calloc;
+        #realloc;
+        sendmsg;
+        sendmmsg;
+        sendfile;
+        #openat;
+        accept4;
+        #random;
+        clock_gettime;
+        gettimeofday;
+        #time;  # if intercepted, xraft won't connect!
+        clock_getres;  # if not intercepted, xraft's timing will not be controlled
+        syscall;
+        writev;
+        read;
+        recv;
+        recvfrom;
+    local:
+        *;
+};
