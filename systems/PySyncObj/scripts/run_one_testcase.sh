@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source $(dirname "$(realpath "$0")")/env.sh
-source ${RUN_ONE_TESTCASE_COMMON_SH} "$1" -p "$(dirname $1)/pysyncobj"
+source ${RUN_ONE_TESTCASE_COMMON_SH} "$@" -p "$(dirname $1)/pysyncobj"

@@ -47,15 +47,15 @@ struct cmp_addr_info {
     struct cmp_addr cmp_addr_func;
     struct cmp_addr_no_port cmp_addr_no_port_func;
     bool operator()(const struct addr_info& a, const struct addr_info& b) const {
-        if (a.passive == b.passive) {
-            if (!option_multi_ports) {
-                return cmp_addr_no_port_func(a.addr, b.addr);
-            } else {
-                return cmp_addr_func(a.addr, b.addr);
-            }
+        if (!option_multi_ports) {
+            return cmp_addr_no_port_func(a.addr, b.addr);
         }
-        else
+        else if (a.passive == b.passive) {
+            return cmp_addr_func(a.addr, b.addr);
+        }
+        else {
             return a.passive < b.passive;
+        }
     }
 };
 
@@ -184,21 +184,22 @@ int check_fd_is_concerned(int fd) {
     return fd_map.find(fd) != fd_map.end();
 }
 
-static void debug_show_addr_map() {
+static void debug_show_addr_map(const struct sockaddr_in &addr) {
     for (auto &i: addr_map) {
-        print_info("DEBUG: addr_map: key: %s, value: %d\n", ADDR_TO_STR2(&i.first), i.second);
+        print_info("DEBUG: addr_map: key: %s, is_passive: %d, value: %d\n", ADDR_TO_STR2(&i.first.addr), i.first.passive, i.second);
     }
+    print_info("DEBUG: addr to lookup: %s\n", ADDR_TO_STR2(&addr));
 }
 
 int get_addr_fd(struct sockaddr_in addr) {
     auto it = addr_map.find({addr, false});
     if (it != addr_map.end()) {
         if (it->second == -1) {
-            debug_show_addr_map();
+            debug_show_addr_map(addr);
         }
         return it->second;
     }
-    debug_show_addr_map();
+    debug_show_addr_map(addr);
     return -1;
 }
 

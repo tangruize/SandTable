@@ -25,7 +25,7 @@ class SyncObjConf(object):
 
         #: Disable autoTick if you want to call onTick manually.
         #: Otherwise it will be called automatically from separate thread.
-        self.autoTick = kwargs.get('autoTick', True)
+        self.autoTick = kwargs.get('autoTick', False)
         self.autoTickPeriod = kwargs.get('autoTickPeriod', 0.05)
 
         #: Commands queue is used to store commands before real processing.
