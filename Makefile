@@ -73,3 +73,9 @@ replay_pysyncobj_leader_commits_older_terms_bug:
 
 replay_pysyncobj_non_monotonic_commit_idx_bug:
 	make _replay_pysyncobj_bug BUG_DIR=non_monotonic_commit_idx N_SERVERS=2
+
+replay_pysyncobj_match_idx_greater_than_next_idx_bug:
+	make _replay_pysyncobj_bug BUG_DIR=match_idx_greater_than_next_idx N_SERVERS=2
+
+replay_pysyncobj_non_monotonic_match_idx_bug:
+	make _replay_pysyncobj_bug BUG_DIR=non_monotonic_match_idx N_SERVERS=2

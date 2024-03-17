@@ -33,14 +33,14 @@ class SyncObjConf(object):
 
         #: After randomly selected timeout (in range from minTimeout to maxTimeout)
         #: leader considered dead, and leader election starts.
-        self.raftMinTimeout = kwargs.get('raftMinTimeout', 0.4)
+        self.raftMinTimeout = kwargs.get('raftMinTimeout', 0.7)
 
         #: Same as raftMinTimeout
         self.raftMaxTimeout = kwargs.get('raftMaxTimeout', 1.4)
 
         #: Interval of sending append_entries (ping) command.
         #: Should be less than raftMinTimeout.
-        self.appendEntriesPeriod = kwargs.get('appendEntriesPeriod', 0.1)
+        self.appendEntriesPeriod = kwargs.get('appendEntriesPeriod', 0.2)
 
         #: When no data received for connectionTimeout - connection considered dead.
         #: Should be more than raftMaxTimeout.
@@ -48,7 +48,7 @@ class SyncObjConf(object):
 
         #: Interval between connection attempts.
         #: Will try to connect to offline nodes each connectionRetryTime.
-        self.connectionRetryTime = kwargs.get('connectionRetryTime', 5.0)
+        self.connectionRetryTime = kwargs.get('connectionRetryTime', 0.05)
 
         #: When leader has no response from the majority of the cluster
         #: for leaderFallbackTimeout - it will fallback to follower state.
