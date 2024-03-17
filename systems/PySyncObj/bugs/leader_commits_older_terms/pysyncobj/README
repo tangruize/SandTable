@@ -1,0 +1,11 @@
+Version: https://github.com/bakwc/PySyncObj/releases/tag/0.3.11
+Applied PR: https://github.com/bakwc/PySyncObj/pull/171/files
+
+Config changes in config.py:
+
+```diff
+28c28
+<         self.autoTick = kwargs.get('autoTick', True)
+---
+>         self.autoTick = kwargs.get('autoTick', False)
+```
