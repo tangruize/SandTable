@@ -154,6 +154,8 @@ static bool raft_recv_installsnapshot(
         Node &n = const_cast<Node&>(i);  // set data is not const, but will not affect sorting order
         cerr << "Raft re-add node, id: " << n.getid() << endl;
         auto node = raft_add_node(me, nullptr, n.getid(),  n.getid() == config.get_self_node().getid());
+        if (!node)
+            continue;
         raft_node_set_voting_committed(node, true);
         raft_node_set_active(node, true);
         n.set_data(node);
