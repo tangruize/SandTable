@@ -333,17 +333,12 @@ int raft_recv_appendentries_response(raft_server_t* me_,
           raft_get_current_idx(me_),
           r->current_idx,
           r->first_idx);
-    __log(me_, node, "enter");
 
-    if (!node) {
-        __log(me_, node, "exit no node!");
+    if (!node)
         return -1;
-    }
 
-    if (!raft_is_leader(me_)) {
-        __log(me_, node, "exit me not leader");
+    if (!raft_is_leader(me_))
         return RAFT_ERR_NOT_LEADER;
-    }
 
     /* If response contains term T > currentTerm: set currentTerm = T
        and convert to follower (§5.3) */
@@ -354,13 +349,10 @@ int raft_recv_appendentries_response(raft_server_t* me_,
             return e;
         raft_become_follower(me_);
         me->leader_id = -1;
-        __log(me_, node, "exit 1");
         return 0;
     }
-    else if (me->current_term != r->term) {
-        __log(me_, node, "exit 2");
+    else if (me->current_term != r->term)
         return 0;
-    }
 
     raft_index_t match_idx = raft_node_get_match_idx(node);
 
@@ -372,10 +364,8 @@ int raft_recv_appendentries_response(raft_server_t* me_,
         assert(0 < next_idx);
         /* Stale response -- ignore */
         assert(match_idx <= next_idx - 1);
-        if (match_idx == next_idx - 1) {
-            __log(me_, node, "exit 3");
+        if (match_idx == next_idx - 1)
             return 0;
-        }
         if (r->current_idx < next_idx - 1)
             raft_node_set_next_idx(node, min(r->current_idx + 1, raft_get_current_idx(me_)));
         else
@@ -383,7 +373,6 @@ int raft_recv_appendentries_response(raft_server_t* me_,
 
         /* retry */
         raft_send_appendentries(me_, node);
-        __log(me_, node, "exit 4");
         return 0;
     }
 
@@ -400,10 +389,8 @@ int raft_recv_appendentries_response(raft_server_t* me_,
             raft_node_set_has_sufficient_logs(node);
     }
 
-    if (r->current_idx <= match_idx) {
-        __log(me_, node, "exit match");
+    if (r->current_idx <= match_idx)
         return 0;
-    }
 
     assert(r->current_idx <= raft_get_current_idx(me_));
 
@@ -436,11 +423,8 @@ int raft_recv_appendentries_response(raft_server_t* me_,
     }
 
     /* Aggressively send remaining entries */
-    if (raft_node_get_next_idx(node) <= raft_get_current_idx(me_)) {
-        __log(me_, node, "aggressively");
+    if (raft_node_get_next_idx(node) <= raft_get_current_idx(me_))
         raft_send_appendentries(me_, node);
-    }
-    __log(me_, node, "exit success");
 
     /* periodic applies committed entries lazily */
 
@@ -624,7 +608,7 @@ int raft_recv_requestvote(raft_server_t* me_,
 
     /* Reject request if we have a leader */
     if (me->leader_id != -1 && me->leader_id != vr->candidate_id &&
-        me->timeout_elapsed < me->election_timeout && me->state == RAFT_STATE_LEADER)
+        me->timeout_elapsed < me->election_timeout)
     {
         r->vote_granted = 0;
         goto done;
@@ -957,7 +941,7 @@ int raft_recv_entry(raft_server_t* me_,
 int raft_send_requestvote(raft_server_t* me_, raft_node_t* node)
 {
     raft_server_private_t* me = (raft_server_private_t*)me_;
-    msg_requestvote_t rv = {};
+    msg_requestvote_t rv;
     int e = 0;
 
     assert(node);

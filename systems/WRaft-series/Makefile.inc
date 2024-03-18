@@ -17,3 +17,6 @@ replay_wraft_non_monotonic_current_term_bug:
 
 replay_wraft_retry_empty_logs_bug:
 	make _replay_wraft_series_bug BUG_SYSTEM=WRaft BUG_DIR=retry_empty_logs N_SERVERS=3
+
+replay_daosraft_leader_votes_for_others_bug:
+	make _replay_wraft_series_bug BUG_SYSTEM=DaosRaft BUG_DIR=leader_votes_for_others N_SERVERS=2
