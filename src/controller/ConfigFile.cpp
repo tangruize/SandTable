@@ -30,6 +30,7 @@ DECLARE_bool(multi_ports);
 DECLARE_string(deliver_first_msg_ports);
 DECLARE_bool(abort_failed_init);
 DECLARE_bool(state_no_fail_empty);
+DECLARE_bool(partition_keep_msgs);
 
 void ConfigFile::load(const string &file) {
     if (file.empty())
@@ -222,6 +223,9 @@ void ConfigFile::load(const string &file) {
                 ok = true;
             } else if (tokens[1] == "state_no_clear") {
                 // nothing to do here
+                ok = true;
+            } else if (tokens[1] == "partition_keep_msgs") {
+                FLAGS_partition_keep_msgs = true;
                 ok = true;
             }
             if (ok) {

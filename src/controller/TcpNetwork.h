@@ -102,7 +102,7 @@ private:
     void enqueue_msg(const channel_status_t &cf, Msg &m);
     bool deliver_msg(const channel_t &channel, Msg *m = nullptr, bool try_deliver = false);
     void do_close(map<int, channel_status_t>::iterator it);
-    void close_connection(int fd, bool tag_disconnected=false, bool close_peer=true);
+    void close_connection(int fd, bool tag_disconnected=false, bool close_peer=true, bool reopen=false);
     bool packet_validation(const MsgHeader &header, unsigned size) const;
     void set_unintercepted(int fd, const channel_t &channel);
     void transfer_unintercepted(int out_fd, int in_fd);
@@ -113,6 +113,7 @@ public:
     static string channel_to_string(const channel_t &c);
     void partition(const string &node, bool clear_msg=false, bool is_recover=false);
     void recover(const string &node);
+    void recover_no_disconnect(const string &node);
     bool send_cmd(const string &node, const string &cmd, int lineno);
     void init(int n_servers, int wait_ms);
     void wait_init(int n_servers, bool double_connection, int wait_ms);
@@ -128,6 +129,7 @@ public:
     bool check_client_online(const string &node);
     bool send_cmd_all(const string &prefix, const string &cmd, int lineno);
     void clear_channel_msgs(const string &from, const string &to);
+    int get_net_len();
 public:
     explicit TcpNetwork(TcpSocket *tcp_socket, bool half_duplex=false);
     void run_epoll();

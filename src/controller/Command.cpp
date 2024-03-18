@@ -158,6 +158,9 @@ void Command::run_read_cmd() {
         } else if (c.get_cmd() == "recover") {
             CHECK_ARGS(2);
             net->recover(c.get_arg(1));
+        } else if (c.get_cmd() == "recover-reopen") {
+            CHECK_ARGS(2);
+            net->recover_no_disconnect(c.get_arg(1));
         } else if (c.get_cmd() == "wait-recover") {
             CHECK_ARGS(1);
             net->wait_recover();
@@ -228,7 +231,15 @@ void Command::run_read_cmd() {
                         assert(shell_result == model_var);
                     }
                 }
-            } else { // "none"
+            } else if (c.get_arg(1) == "net-len") {
+                string net_len = to_string(net->get_net_len());
+                if (net_len != model_var) {
+                    cerr_warning << "Net mgs length compare failed!" << endl;
+                    cerr_warning_cont << "- Code: " << net_len << endl;
+                    cerr_warning_cont << "- Model:" << model_var << endl;
+                }
+            }
+            else { // "none"
                 cerr_detail << "Not compared, just for reference" << endl;
             }
             compare_cache_name.clear();
@@ -293,6 +304,8 @@ void Command::run_read_cmd() {
                     compare_cache_name = c.get_arg(2);
                     model_variable_node = c.get_arg(3);
                     model_var = c.get_args_from(4);
+                } else if (c.get_arg(1) == "net-len") {
+                    model_var = c.get_arg(2);
                 }
                 cerr_verbose << "Comment (line " << cmd_counter << "): " << c << endl;
                 if (c.get_arg(1).starts_with('[')) {

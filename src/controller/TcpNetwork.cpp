@@ -18,6 +18,7 @@ DECLARE_int32(merge_small_msg);
 DECLARE_bool(dump_msg);
 DECLARE_bool(multi_ports);
 DECLARE_bool(abort_failed_init);
+DECLARE_bool(partition_keep_msgs);
 
 #define ROUTER_FD (-2)
 #define PENDING_FD (-3)
@@ -376,8 +377,12 @@ bool TcpNetwork::deliver_msg(const channel_t &c, Msg *m, bool try_deliver) {
         cerr_warning << "deliver_msg cannot find channel for fd (msg dropped): " << msg.fd << endl;
         return false;
     } else if (fd_it->second.disconnected) {
-        cerr_warning << "deliver_msg channel is disconnected (msg dropped): " << channel << endl;
-        return false;
+        if (!FLAGS_partition_keep_msgs) {
+            cerr_warning << "deliver_msg channel is disconnected (msg dropped): " << channel << endl;
+            return false;
+        } else {
+            cerr_verbose << "deliver_msg deliver a partitioned message" << endl;
+        }
     }
     // do deliver
     ssize_t left_size = ssize_t(msg.size), size;
@@ -401,28 +406,32 @@ string TcpNetwork::channel_to_string(const channel_t &c) {
     return src + " -> " + dst + (c.half_duplex_reverse_direction ? " (passive)" : "");
 }
 
-void TcpNetwork::close_connection(int fd, bool tag, bool close_peer) {
+void TcpNetwork::close_connection(int fd, bool tag, bool close_peer, bool reopen) {
     string verbose_str = tag ? "Tag disconnected " : "Close connection ";
+    if (tag && reopen) {
+        verbose_str = "Tag connected ";
+    }
     auto it = fd_to_channel_status.find(fd), it2 = it;
+    bool flag = reopen ? false : true;
     if (it != fd_to_channel_status.end()) {
         cerr_verbose << verbose_str << "fd: " << fd << " " << it->second.channel << endl;
-        it->second.disconnected = true;
+        it->second.disconnected = flag;
 //        clear_msgs(it->second.channel);
         it2 = fd_to_channel_status.find(*it->second.fd);
         if (it2 != fd_to_channel_status.end()) {
             if (!close_peer)
                 verbose_str = "Tag disconnected ";
             cerr_verbose << verbose_str << "(reverse) " << "fd: " << it2->first << " " << it2->second.channel << endl;
-            it2->second.disconnected = true;
+            it2->second.disconnected = flag;
 //            clear_msgs(it2->second.channel);
         }
-        if (!tag) {
+        if (!reopen && !tag) {
             do_close(it);
             if (close_peer)
                 do_close(it2);
         }
     } else {
-        if (!tag) {
+        if (!reopen && !tag) {
             cerr_verbose << "Close connection fd: " << fd << endl;
             close(fd);
         }
@@ -586,7 +595,10 @@ void TcpNetwork::partition(const string &node, bool clear_msg, bool is_recover) 
         }
     }
     for (auto i: fd_to_close) {
-        close_connection(i, false);
+        if (clear_msg)
+            close_connection(i, false);
+        else
+            close_connection(i, true, true, true);
     }
     if (!matched) {
         cerr_warning << "No matched channel for node: " << configFile.get_node_name_with_addr(addr) << endl;
@@ -594,10 +606,14 @@ void TcpNetwork::partition(const string &node, bool clear_msg, bool is_recover) 
 }
 
 void TcpNetwork::recover(const string &node) {
-    partition(node, true, true);
+        partition(node, true, true);
 //    if (servers_count != 0) {
 //        connections_to_wait += servers_count - 1;
 //    }
+}
+
+void TcpNetwork::recover_no_disconnect(const string &node) {
+    partition(node, false, true);
 }
 
 string TcpNetwork::convert_cmd_check_has_recv_queue(__attribute_maybe_unused__ const string &node, const string &c) {
@@ -824,6 +840,15 @@ void TcpNetwork::init(int n_servers, int wait_ms) {
 
 string TcpNetwork::get_status_cache() {
     return net_status_cache;
+}
+
+int TcpNetwork::get_net_len() {
+    int msgs_count = 0;
+    for (auto &i: fd_to_channel_status) {
+        int msgs_size = (int)network[i.second.channel].msgs.size_approx();
+        msgs_count += msgs_size;
+    }
+    return msgs_count;
 }
 
 // should use carefully due to concurrent

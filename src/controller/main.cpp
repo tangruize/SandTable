@@ -36,7 +36,7 @@ DEFINE_bool(multi_ports, false, "Enable multiple ports");
 DEFINE_string(deliver_first_msg_ports, "", "A port lists separated by comma to deliver first msg");
 DEFINE_bool(abort_failed_init, false, "Abort when init failed");
 DEFINE_bool(state_no_fail_empty, false, "Not to abort when code state is empty");
-DEFINE_bool(allow_deliver_partitioned_msg, false, "Allow deliver partitioned msg");
+DEFINE_bool(partition_keep_msgs, false, "Keep messages and allow delivery when partitioned");
 
 ConfigFile configFile;
 Command command;
