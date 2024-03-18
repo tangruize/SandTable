@@ -84,12 +84,13 @@ private:
     bool is_direct;
     const int max_events = 10;
     const struct timeval recv_timeout = { .tv_sec = 3, .tv_usec = 0};
-    const int64_t deliver_timout = recv_timeout.tv_sec * 1000000 + recv_timeout.tv_usec;  // reuse recv timeout
+    const int64_t deliver_timeout = recv_timeout.tv_sec * 1000000 + recv_timeout.tv_usec;  // reuse recv timeout
     const int syn_retries = 1;  // connection syn retry times. 1: ~3s timeout, 2: ~7s timeout, 0: ~127s (unintuitive)
     int server_count = 0;
     string net_status_cache;
     bool is_half_duplex;
     list<pair<AcceptData, channel_status_t>> pending_connections;
+    vector<Msg> messages_array; // backward compatibility, for random access (allow_msg_unordered)
 private:
     void set_recv_timeout(int fd);
     void set_conn_retries(int fd);
@@ -109,6 +110,7 @@ private:
     void clear_msgs(const channel_t &channel);
     static bool check_connection_is_active(int fd);
     string convert_cmd_check_has_recv_queue(const string &node, const string &c);
+    void enqueue_messages_array(const Msg &msg);
 public:
     static string channel_to_string(const channel_t &c);
     void partition(const string &node, bool clear_msg=false, bool is_recover=false);
@@ -118,7 +120,8 @@ public:
     void init(int n_servers, int wait_ms);
     void wait_init(int n_servers, bool double_connection, int wait_ms);
     void wait_recover();
-    bool deliver(const string &from, const string &to, bool all);
+    bool deliver(const string &from, const string &to, bool all, unsigned seq=0);
+    bool deliver_unordered(const string &from, const string &to, unsigned seq); // backward compatibility
     void print_status();
     string get_status_cache();
     void deliver_all(int least_count=0);

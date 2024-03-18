@@ -19,6 +19,7 @@ DECLARE_bool(dump_msg);
 DECLARE_bool(multi_ports);
 DECLARE_bool(abort_failed_init);
 DECLARE_bool(partition_keep_msgs);
+DECLARE_bool(allow_msg_unordered);
 
 #define ROUTER_FD (-2)
 #define PENDING_FD (-3)
@@ -210,6 +211,11 @@ void TcpNetwork::add_monitor_fd(int fd) const {
     }
 }
 
+void TcpNetwork::enqueue_messages_array(const Msg &msg) {
+    messages_array.push_back(msg);
+    // cerr_detail << "Enqueue " << messages_array.size() << " fd: " << *msg.fd << endl;
+}
+
 void TcpNetwork::do_receive(int fd) {
     MsgHeader header{};
     ssize_t size;
@@ -306,6 +312,9 @@ void TcpNetwork::enqueue_msg(const channel_status_t &cf, Msg &m) {
     if (FLAGS_dump_msg) {
         cerr_detail << "Dump msg to enqueue: " << m.to_string() << endl;
     }
+    if (FLAGS_allow_msg_unordered) {
+        enqueue_messages_array(m);
+    }
     if (int(m.size) <= FLAGS_merge_small_msg && cm.wait_merge == NULL) {
         cerr_detail << "Wait merge: in_fd: " << *cf.self_fd << ", out_fd: " << *cf.fd
                     << ", " << cf.channel << " size: " << m.size << endl;
@@ -335,7 +344,7 @@ bool TcpNetwork::deliver_msg(const channel_t &c, Msg *m, bool try_deliver) {
     // get msg to deliver
     Msg msg(m);
     channel_t channel{};
-    if (!m) {
+    if (!m || FLAGS_allow_msg_unordered) {  // if FLAGS_allow_msg_unordered, just dequeue but still use arg m for delivery
         auto it = network.find(c);
         channel = it->first;
 //        assert(it != network.end());
@@ -347,14 +356,23 @@ bool TcpNetwork::deliver_msg(const channel_t &c, Msg *m, bool try_deliver) {
         int drop_count = -1;
         do {
             bool ok;
-            if (!try_deliver)
-                ok = it->second.msgs.wait_dequeue_timed(msg, deliver_timout);
-            else {
-                ok = it->second.msgs.try_dequeue(msg);
-                if (!ok)
-                    return false;
+            if (FLAGS_allow_msg_unordered) {
+                Msg tmp;  // for dropping the message. The dropped one might be a different msg than m.
+                          // It is ok because we just drop it to maintain the network buffer count
+                ok = it->second.msgs.try_dequeue(tmp);
+                if (!ok) {
+                    cerr_warning << "deliver_msg cannot find a msg to drop for unordered delivery" << endl;
+                }
+            } else {
+                if (!try_deliver)
+                    ok = it->second.msgs.wait_dequeue_timed(msg, deliver_timeout);
+                else {
+                    ok = it->second.msgs.try_dequeue(msg);
+                    if (!ok)
+                        return false;
+                }
             }
-//            bool ok = cm.msgs.wait_dequeue_timed(msg, deliver_timout);
+//            bool ok = cm.msgs.wait_dequeue_timed(msg, deliver_timeout);
             drop_count++;
             if (!ok) {
                 cerr_warning << "deliver_msg wait_dequeue_timed timeout ";
@@ -393,7 +411,7 @@ bool TcpNetwork::deliver_msg(const channel_t &c, Msg *m, bool try_deliver) {
         close_connection(*msg.fd, !is_direct);  // close connection on write error
         return false;
     }
-    cerr_detail << "Deliver msg " << channel << " size: " << msg.size << endl;
+    cerr_detail << "Deliver msg " << channel << " fd: " << *msg.fd << " size: " << msg.size << endl;
     if (FLAGS_dump_msg) {
         cerr_detail << "  Content: " << msg.to_string() << endl;
     }
@@ -711,7 +729,7 @@ void TcpNetwork::wait_init(int n_servers, bool double_connections, int wait_ms) 
     }
 }
 
-bool TcpNetwork::deliver(const string &from, const string &to, bool all) {
+bool TcpNetwork::deliver(const string &from, const string &to, bool all, unsigned seq) {
     channel_t channel{}, channel2{};
     channel.first = channel2.first = configFile.get_node_addr(from);
     channel.second = channel2.second = configFile.get_node_addr(to);
@@ -756,11 +774,25 @@ bool TcpNetwork::deliver(const string &from, const string &to, bool all) {
             cerr_warning << "deliver may block due to no message in the channel: " << channel << endl;
             return false;
         }
-        if (!deliver_msg(channel) && all) {
-            return false;
+        if (seq == 0) {
+            if (!deliver_msg(channel) && all) {
+                return false;
+            }
+        } else {
+            if (seq > messages_array.size()) {
+                cerr_warning << "Unordered deliver out of boundary, size: " << messages_array.size() << ", seq: " << seq << endl;
+                return false;
+            }
+            if (!deliver_msg(channel, &messages_array[seq-1])) {
+                return false;
+            }
         }
     } while (all);
     return true;
+}
+
+bool TcpNetwork::deliver_unordered(const string &from, const string &to, unsigned seq) {
+    return deliver(from, to, false, seq);
 }
 
 void TcpNetwork::wait_recover() {

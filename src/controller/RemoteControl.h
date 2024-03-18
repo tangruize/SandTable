@@ -29,6 +29,9 @@ public:
     string get_cache_cmp_data() const {
         return cache_cmp_data;
     }
+    void clear_cache_cmp_data() {
+        cache_cmp_data.clear();
+    }
 };
 
 extern RemoteControl *remote_control;

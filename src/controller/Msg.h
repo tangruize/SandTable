@@ -21,7 +21,13 @@ struct Msg {
     struct MsgHeader *header = nullptr;  // caution to use header! it is network endian and is not converted
     string content;
     uint32_t size = 0;
-    Msg(const Msg&) = delete;  // no copy constructor
+    // Msg(const Msg&) = delete;  // no copy constructor
+    explicit Msg(const Msg& m) {  // fpr backward compatibility
+        fd = m.fd;
+        content = m.content;
+        size = m.size;
+        header = (struct MsgHeader *)&content;
+    }
     Msg& operator=(const Msg &m) = delete;  // no copy assignment
     explicit Msg(Msg *m = nullptr) {
         if (m)

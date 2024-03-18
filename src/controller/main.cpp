@@ -37,6 +37,8 @@ DEFINE_string(deliver_first_msg_ports, "", "A port lists separated by comma to d
 DEFINE_bool(abort_failed_init, false, "Abort when init failed");
 DEFINE_bool(state_no_fail_empty, false, "Not to abort when code state is empty");
 DEFINE_bool(partition_keep_msgs, false, "Keep messages and allow delivery when partitioned");
+// Backward compatibility for WRaft exp, which originally uses UDP
+DEFINE_bool(allow_msg_unordered, false, "Downgrade TCP to allow unordered delivery");
 
 ConfigFile configFile;
 Command command;

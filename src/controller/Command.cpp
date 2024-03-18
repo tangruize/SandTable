@@ -149,6 +149,11 @@ void Command::run_read_cmd() {
             if (!net->deliver(c.get_arg(1), c.get_arg(2), false)) {
                 c.prompt_invalid("deliver failed");
             }
+        } else if (c.get_cmd() == "deliver-unordered") {
+            CHECK_ARGS(4);
+            if (!net->deliver_unordered(c.get_arg(1), c.get_arg(2), std::atoi(c.get_arg(3).c_str()))) {
+                c.prompt_invalid("deliver-unordered failed");
+            }
         } else if (c.get_cmd() == "status") {
             CHECK_ARGS(1);
             net->print_status();
@@ -244,6 +249,7 @@ void Command::run_read_cmd() {
             }
             compare_cache_name.clear();
             model_var.clear();
+            remote_control->clear_cache_cmp_data();
         } else if (c.get_cmd() == "sleep") {  // sleep for a while to execute the next cmd
             CHECK_ARGS(2);
             std::this_thread::sleep_for(std::chrono::milliseconds(stoi(c.get_arg(1))));

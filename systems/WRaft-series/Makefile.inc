@@ -9,8 +9,8 @@ replay_wraft_inconsistent_committed_log_bug:
 replay_wraft_incorrect_appending_entries_bug:
 	make _replay_wraft_series_bug BUG_SYSTEM=WRaft BUG_DIR=incorrect_appending_entries N_SERVERS=3
 
-replay_wraft_match_idx_greater_than_next_idx_bug:
-	make _replay_wraft_series_bug BUG_SYSTEM=WRaft BUG_DIR=match_idx_greater_than_next_idx N_SERVERS=3
+replay_wraft_next_idx_no_greater_than_match_idx_bug:
+	make _replay_wraft_series_bug BUG_SYSTEM=WRaft BUG_DIR=next_idx_no_greater_than_match_idx N_SERVERS=3
 
 replay_wraft_non_monotonic_current_term_bug:
 	make _replay_wraft_series_bug BUG_SYSTEM=WRaft BUG_DIR=non_monotonic_current_term N_SERVERS=3

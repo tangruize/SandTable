@@ -157,11 +157,11 @@ def yield_trace(states):
             yield from compare(n, 'currentTerm', 'currentTerm')
             yield from compare(n, 'log', 'log')
             yield from compare(n, 'state', 'state')
-            if model_value == "4":  # leader
+            if model_value == "3":  # leader
                 yield from compare(n, 'nextIdx', 'nextIdx')
                 yield from compare(n, 'matchIdx', 'matchIdx')
-    def deliver(src, dst):
-        yield ['deliver', src, dst]
+    def deliver(src, dst, seq):
+        yield ['deliver-unordered', src, dst, str(seq)]
         # yield ['loop', 'intercept', dst, 'check_has_recv_queue', nodes[src]+':0']
         yield ['loop', 'intercept', dst, 'check_has_recv_queue', src]
         yield ['execute', dst, 'raft recvfrom {}'.format(src)]
@@ -207,7 +207,7 @@ def yield_trace(states):
                                    "HandleRequestVoteRequest",
                                    "HandleRequestVoteResponse",
                                    "HandleSnapshotRequest"}:
-            yield from deliver(parameters[1], parameters[0])
+            yield from deliver(parameters[1], parameters[0], parameters[2])
         elif cmd.split(':')[0] == 'Timeout':
             yield ['intercept', comment[1], 'inc_time_ms', '2000']  # > 2s
         elif cmd == 'AppendEntriesAll':

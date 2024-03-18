@@ -31,6 +31,7 @@ DECLARE_string(deliver_first_msg_ports);
 DECLARE_bool(abort_failed_init);
 DECLARE_bool(state_no_fail_empty);
 DECLARE_bool(partition_keep_msgs);
+DECLARE_bool(allow_msg_unordered);
 
 void ConfigFile::load(const string &file) {
     if (file.empty())
@@ -226,6 +227,9 @@ void ConfigFile::load(const string &file) {
                 ok = true;
             } else if (tokens[1] == "partition_keep_msgs") {
                 FLAGS_partition_keep_msgs = true;
+                ok = true;
+            } else if (tokens[1] == "allow_msg_unordered") {
+                FLAGS_allow_msg_unordered = true;
                 ok = true;
             }
             if (ok) {

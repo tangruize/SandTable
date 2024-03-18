@@ -5,5 +5,5 @@ source $SYSTEM_CONFIG_COMMON_SH "$@"
 
 cat <<EOF >> "$GEN_FILE"
 option partition_keep_msgs
-option allow_last_msg_unordered
+option allow_msg_unordered
 EOF
