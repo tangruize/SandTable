@@ -368,6 +368,13 @@ bool RaftRecvMsg(Node node) {
         }
         case MSG_RV: {
             cerr_verbose << "RaftRecvMsg MSG_RV" << endl;
+            // raft servers only vote for candidate after election timeout,
+            // however TLA does not model it and servers are always votable.
+            // advance timeout_elapsed to make the server votable.
+            if (raft_get_timeout_elapsed(me) < raft_get_election_timeout(me)) {
+                // printf("timeout_elapsed: %d, election_timeout: %d\n", raft_get_timeout_elapsed(me), raft_get_election_timeout(me));
+                raft_periodic(me, raft_get_election_timeout(me) - raft_get_timeout_elapsed(me));
+            }
             auto *req = reinterpret_cast<raft_requestvote_req_t *>(&msg.front());
             raft_requestvote_resp_t resp{};
             raft_recv_requestvote(me, raft_node, req, &resp);

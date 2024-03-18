@@ -213,7 +213,7 @@ def yield_trace(states):
                 if comment[0] == 'BecomePrecandidate':
                     yield ['intercept', comment[1], 'inc_time_ms', '2000']  # > 2s
                 elif comment[0] == 'SendAppendentriesAll':
-                    yield ['intercept', comment[1], 'inc_time_ms', '300']  # > 0.2s
+                    yield ['intercept', comment[1], 'inc_time_ms', '1100']  # > 1s
                 elif comment[0] == 'RecvEntry':
                     yield ['execute', comment[1], "raft cli {}".format(comment[2])]
                 yield from do_tick(comment[1])

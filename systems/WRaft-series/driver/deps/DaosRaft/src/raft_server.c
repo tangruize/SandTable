@@ -61,7 +61,7 @@ raft_server_t* raft_new()
     me->current_term = 0;
     me->voted_for = -1;
     me->timeout_elapsed = 0;
-    me->request_timeout = 200;
+    me->request_timeout = 1050;
     me->election_timeout = 1000;
     raft_randomize_election_timeout((raft_server_t*)me);
     me->log = log_new();

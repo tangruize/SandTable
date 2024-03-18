@@ -332,13 +332,13 @@ RecvRequestVote(m) ==  \* func: raft_recv_requestvote
        /\ UNCHANGED <<leaderVars, candidateVars, logVars>>
        /\ NetUpdate2(NetReplyMsg(msg, m), 
             <<"RecvRequestVote", msg.status, dst, src, IF req.prevote THEN "prevote" ELSE "not-prevote">>)
-       /\ IF msg.status = "voted"
-          THEN \* assert(!raft_is_leader(me_) && (!raft_is_candidate(me_) || me->prevote || vr->prevote));
-               Assert(/\ state'[dst] /= Leader
-                      /\ \/ state'[dst] /= Candidate
-                         \/ /\ state'[dst] = Candidate
-                            /\ req.prevote, <<m, state'>>)
-          ELSE TRUE
+    \*    /\ IF msg.status = "voted"
+    \*       THEN \* assert(!raft_is_leader(me_) && (!raft_is_candidate(me_) || me->prevote || vr->prevote));
+    \*            Assert(/\ state'[dst] /= Leader
+    \*                   /\ \/ state'[dst] /= Candidate
+    \*                      \/ /\ state'[dst] = Candidate
+    \*                         /\ req.prevote, <<m, state'>>)
+    \*       ELSE TRUE
 
 (***************************************************************************)
 (* Recv requestvote response                                               *)
@@ -685,6 +685,15 @@ LeaderTermLogHasGreatestIdx ==
                 LET IncTermLogCount(a, b) == IF a.term = current_term[i] THEN b + 1 ELSE b
                 IN FoldSeq(IncTermLogCount, 0, log[i]) >= FoldSeq(IncTermLogCount, 0, log[j])
         ELSE TRUE
+
+VoteAssertions ==
+    netcmd[1][1] = "RecvRequestVote" /\ netcmd[1][2] = "voted" =>
+        LET dst == netcmd[1][3]
+            is_prevote == netcmd[1][5] = "prevote"
+        IN  /\ state[dst] /= Leader
+            /\ \/ state[dst] /= Candidate
+               \/ /\ state[dst] = Candidate
+                  /\ is_prevote
 
 InvSequence == <<
     LeaderAppendOnly,
