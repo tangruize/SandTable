@@ -17,7 +17,7 @@ public:
     int socket() const override {
         return socket_fd;
     }
-    AcceptData accept(int client_fd = -1) const override;
+    AcceptData accept(int client_fd = -1) const;
 };
 
 #endif //TPROXY_TCPSOCKET_H

@@ -61,5 +61,37 @@ struct Msg {
     }
 };
 
+class UdpMsg{
+private:
+    uint32_t sequential;
+    string content;
+    struct sockaddr_in* src;
+    struct sockaddr_in* dst;
+public:
+    UdpMsg(uint32_t seq, char* content, struct sockaddr_in* src, struct sockaddr_in* dst);
+    UdpMsg(const UdpMsg&udpmsg);  // no copy constructor
+    UdpMsg& operator=(Msg &&m) noexcept;
+    char *buffer() {  // buffer pointer
+        return &content.front();
+    }
+    const char *buffer() const {
+        return &content.front();
+    }
+    int get_seq() const{
+        return sequential;
+    }
+    int size() const {
+        return content.size();
+    }
+    struct sockaddr_in* get_src() const {
+        return src;
+    }
+    struct sockaddr_in* get_dst() const {
+        return dst;
+    }
+    void set_seq(int seq);
+    void show() const;
+    
+};
 
 #endif //TPROXY_MSG_H

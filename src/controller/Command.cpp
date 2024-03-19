@@ -5,12 +5,14 @@
 #include "common.h"
 #include "Command.h"
 #include "TcpNetwork.h"
+#include "UdpNetwork.h"
 #include <thread>
 
 DECLARE_bool(delay_connect);
 DECLARE_int32(block_connect_timeout);
 DECLARE_bool(half_duplex_connection);
 DECLARE_bool(state_no_fail_empty);
+DECLARE_bool(udp);
 
 void Command::read_file(const string &file) {
     cerr_verbose << "Read command file \"" << file << "\"" << endl;
@@ -145,41 +147,86 @@ void Command::run_read_cmd() {
             c.shift();
         }
         if (c.get_cmd() == "deliver") {
-            CHECK_ARGS(3);
-            if (!net->deliver(c.get_arg(1), c.get_arg(2), false)) {
-                c.prompt_invalid("deliver failed");
+            if (!FLAGS_udp) {
+                CHECK_ARGS(3);
+                if (!net->deliver(c.get_arg(1), c.get_arg(2), false)) {
+                    c.prompt_invalid("deliver failed");
+                }
+            } else {
+                CHECK_ARGS(2);
+                if (!udpNet->deliver(stoi(c.get_arg(1)))) {
+                    c.prompt_invalid("cannot find message");
+                }
             }
-        } else if (c.get_cmd() == "deliver-unordered") {
+        } else if (c.get_cmd() == "deliver-unordered") {  // tcp only
             CHECK_ARGS(4);
             if (!net->deliver_unordered(c.get_arg(1), c.get_arg(2), std::atoi(c.get_arg(3).c_str()))) {
                 c.prompt_invalid("deliver-unordered failed");
             }
+        } else if(c.get_cmd() == "send") {
+            CHECK_ARGS(4);
+            char* data;
+            const int len = c.get_arg(3).length();
+            data = new char[len + 1];
+            stpcpy(data, c.get_arg(3).c_str());
+            if (!udpNet->sendData(c.get_arg(1), c.get_arg(2), data)) {
+                c.prompt_invalid("sendData wrong");
+            }
+        } else if(c.get_cmd() == "drop") {
+            CHECK_ARGS(2);
+            if (!udpNet->dropMessage(stoi(c.get_arg(1)))) {
+                c.prompt_invalid("cannot find message");
+            }
+        } else if(c.get_cmd() == "duplicate") {
+            CHECK_ARGS(2);
+            if (!udpNet->duplicateMessage(stoi(c.get_arg(1)))) {
+                c.prompt_invalid("cannot find message");
+            }
+        } else if(c.get_cmd() == "block") {
+            CHECK_ARGS(1);
+            udpNet->set_block();
+        } else if(c.get_cmd() == "unblock") {
+            CHECK_ARGS(1);
+            udpNet->set_unblock();
         } else if (c.get_cmd() == "status") {
             CHECK_ARGS(1);
-            net->print_status();
-        } else if (c.get_cmd() == "partition") {
+            if (!FLAGS_udp) {
+                net->print_status();
+            } else {
+                udpNet->print_status();
+            }
+        } else if (c.get_cmd() == "partition") {  // tcp only
             CHECK_ARGS(2);
             net->partition(c.get_arg(1));
-        } else if (c.get_cmd() == "recover") {
+        } else if (c.get_cmd() == "recover") {  // tcp only
             CHECK_ARGS(2);
             net->recover(c.get_arg(1));
-        } else if (c.get_cmd() == "recover-reopen") {
+        } else if (c.get_cmd() == "recover-reopen") {  // tcp only
             CHECK_ARGS(2);
             net->recover_no_disconnect(c.get_arg(1));
-        } else if (c.get_cmd() == "wait-recover") {
+        } else if (c.get_cmd() == "wait-recover") {  // tcp only
             CHECK_ARGS(1);
             net->wait_recover();
         } else if (c.get_cmd() == "intercept") {
             CHECK_ARGS_MORE(3, true);
-            finish_loop = net->send_cmd(c.get_arg(1), c.get_args_from(2), cmd_counter);
-        } else if (c.get_cmd() == "init") {
-            CHECK_ARGS_MORE(2, true);
-            if (c.size() == 2) {
-                net->init(std::stoi(c.get_arg(1)), 5000);
+            if (!FLAGS_udp) {
+                finish_loop = net->send_cmd(c.get_arg(1), c.get_args_from(2), cmd_counter);
             } else {
-                net->init(std::stoi(c.get_arg(1)), stoi(c.get_arg(2)));
+                finish_loop = udpNet->send_cmd(c.get_arg(1), c.get_args_from(2), cmd_counter);
             }
-        } else if (c.get_cmd() == "wait-init") {
+        } else if (c.get_cmd() == "init") {
+            if (!FLAGS_udp) {
+                CHECK_ARGS_MORE(2, true);
+                if (c.size() == 2) {
+                    net->init(std::stoi(c.get_arg(1)), 5000);
+                } else {
+                    net->init(std::stoi(c.get_arg(1)), stoi(c.get_arg(2)));
+                }
+            } else {
+                CHECK_ARGS(2);
+                udpNet->init(std::stoi(c.get_arg(1)));
+            }
+        } else if (c.get_cmd() == "wait-init") {  // tcp only
             CHECK_ARGS_MORE(2, true);
             if (c.size() == 2) {
                 net->wait_init(std::stoi(c.get_arg(1)), FLAGS_half_duplex_connection, 5000);
@@ -192,19 +239,33 @@ void Command::run_read_cmd() {
             CHECK_ARGS_MORE(3, true);
             last_exec_node = c.get_arg(1);
             finish_loop = remote_control->send_cmd_ssh(c.get_arg(1), c.get_args_from(2));
+        } else if (c.get_cmd() == "execute_asy") {
+            CHECK_ARGS_MORE(3, true);
+            last_exec_node = c.get_arg(1);
+            finish_loop = remote_control->send_cmd_ssh_asy(c.get_arg(1), c.get_args_from(2));
         } else if (c.get_cmd() == "deliver-all") {
 //            CHECK_ARGS(2);
-            CHECK_ARGS_MORE(2, true);
-            if (c.size() == 2) {
-                net->deliver_all(std::stoi(c.get_arg(1)));
+            if (!FLAGS_udp) {
+                CHECK_ARGS_MORE(2, true);
+                if (c.size() == 2) {
+                    net->deliver_all(std::stoi(c.get_arg(1)));
+                } else {
+                    if (!net->deliver(c.get_arg(1), c.get_arg(2), true))
+                        c.prompt_invalid("deliver failed");
+                }
             } else {
-                if (!net->deliver(c.get_arg(1), c.get_arg(2), true))
-                    c.prompt_invalid("deliver failed");
+                CHECK_ARGS(2);
+                udpNet->deliver_all(std::stoi(c.get_arg(1)));
             }
         } else if (c.get_cmd() == "compare") {
             CHECK_ARGS(2);
             if (c.get_arg(1) == "net") {
-                string net_status = net->get_status_cache();
+                string net_status;
+                if (!FLAGS_udp) {
+                    net_status = net->get_status_cache();
+                } else {
+                    net_status = udpNet->get_status_cache();
+                }
                 if (net_status != model_var) {
                     cerr_warning << "Net status is inconsistency!" << endl;
                     cerr_warning_cont << "- Code:" << endl;
@@ -250,10 +311,14 @@ void Command::run_read_cmd() {
             compare_cache_name.clear();
             model_var.clear();
             remote_control->clear_cache_cmp_data();
-        } else if (c.get_cmd() == "sleep") {  // sleep for a while to execute the next cmd
-            CHECK_ARGS(2);
-            std::this_thread::sleep_for(std::chrono::milliseconds(stoi(c.get_arg(1))));
-        } else if (c.get_cmd() == "connect-all") {  // connect pending connections
+        } else if (c.get_cmd() == "sleep" || c.get_cmd() == "nop") {  // sleep for a while to execute the next cmd
+            CHECK_ARGS_MORE(1, true);
+            int milliseconds = 1000;
+            if (c.size() >= 2) {
+                milliseconds = stoi(c.get_arg(1));
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+        } else if (c.get_cmd() == "connect-all") {  // connect pending connections  // tcp only
             CHECK_ARGS(1);
             net->connect_pending();
         } else if (c.get_cmd() == "disable") {
@@ -316,7 +381,9 @@ void Command::run_read_cmd() {
                 cerr_verbose << "Comment (line " << cmd_counter << "): " << c << endl;
                 if (c.get_arg(1).starts_with('[')) {
                     // print cmd in each node
-                    net->send_cmd_all("print", c.get_args_from(1), cmd_counter);
+                    if (!FLAGS_udp) {
+                        net->send_cmd_all("print", c.get_args_from(1), cmd_counter);
+                    }
                 }
             } else {
                 cerr_warning << "Unknown cmd: " << c << endl;

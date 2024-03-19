@@ -155,6 +155,7 @@ case "$1" in
         "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" ip route add local "${SUBNET}" dev lo
         # tproxy iptables rule in controller node
         "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" iptables -t mangle -A PREROUTING -d "${SUBNET}" -p tcp -m tcp -j TPROXY --on-port "${PORT}" --on-ip 127.0.0.1
+        "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" iptables -t mangle -A PREROUTING -d "${SUBNET}" -p udp -m udp -j TPROXY --on-port "${PORT}" --on-ip 127.0.0.1
         # add route host to controller
         ip route add "$SUBNET" via "$CONTROLLER_IP" dev "${INTERFACE}"
         # enable ip forwarding
@@ -170,6 +171,7 @@ case "$1" in
         delete_iptables_no_nat_rule "$FIREWALL_CMD"
         "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" ip route del local "${SUBNET}" dev lo
         "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" iptables -t mangle -D PREROUTING -d "${SUBNET}" -p tcp -m tcp -j TPROXY --on-port "${PORT}" --on-ip 127.0.0.1
+        "${BACKEND}" exec $PRIV_OR_SEP "$CONTROLLER" iptables -t mangle -D PREROUTING -d "${SUBNET}" -p udp -m udp -j TPROXY --on-port "${PORT}" --on-ip 127.0.0.1
         ;;
     *)
         usage

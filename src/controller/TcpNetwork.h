@@ -10,7 +10,6 @@
 #include "Command.h"
 #include "Msg.h"
 #include "RemoteControl.h"
-#include "Network.h"
 #include <ctime>
 #include <set>
 #include <list>
@@ -72,7 +71,7 @@ struct cmp_channel {
     }
 };
 
-class TcpNetwork: Network {
+class TcpNetwork {
 private:
     TcpSocket *tcp;
     map<int, channel_status_t> fd_to_channel_status;

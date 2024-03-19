@@ -13,7 +13,8 @@ find_package(ConcurrentQueue REQUIRED)
 
 add_executable(controller main.cpp TcpSocket.cpp TcpSocket.h common.h ConfigFile.cpp ConfigFile.h
         TcpNetwork.cpp TcpNetwork.h Command.cpp Command.h Repl.cpp Repl.h
-        Socket.cpp Socket.h RemoteControl.cpp RemoteControl.h Msg.cpp Msg.h Network.cpp Network.h)
+        Socket.cpp Socket.h RemoteControl.cpp RemoteControl.h Msg.cpp Msg.h
+        UdpNetwork.h UdpNetwork.cpp UdpSocket.cpp UdpSocket.h)
 target_link_libraries(controller PUBLIC
         gflags
         readline

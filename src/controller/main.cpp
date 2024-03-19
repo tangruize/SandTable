@@ -3,8 +3,10 @@
 //
 
 #include "TcpSocket.h"
+#include "UdpSocket.h"
 #include "ConfigFile.h"
 #include "TcpNetwork.h"
+#include "UdpNetwork.h"
 #include "Repl.h"
 #include "RemoteControl.h"
 
@@ -39,6 +41,7 @@ DEFINE_bool(state_no_fail_empty, false, "Not to abort when code state is empty")
 DEFINE_bool(partition_keep_msgs, false, "Keep messages and allow delivery when partitioned");
 // Backward compatibility for WRaft exp, which originally uses UDP
 DEFINE_bool(allow_msg_unordered, false, "Downgrade TCP to allow unordered delivery");
+DEFINE_bool(udp, false, "Network type is UDP");
 
 ConfigFile configFile;
 Command command;
@@ -72,15 +75,12 @@ int main(int argc, char **argv) {
     if (!FLAGS_deliver_first_msg_ports.empty())
         configFile.init_port_to_deliver_first_msg(FLAGS_deliver_first_msg_ports);
     configFile.load(FLAGS_config);
-    TcpSocket tcpSocket(configFile.get_port());
     signal(SIGPIPE, SIG_IGN);
 
     if (configFile.get_strategy() == STRATEGY_NOT_SET) {
         ShowUsageWithFlagsRestrict(argv[0], "main");
         exit(1);
     }
-    TcpNetwork tcpNetwork(&tcpSocket, FLAGS_half_duplex_connection);
-    net = &tcpNetwork;
     RemoteControl remoteControl;
     remote_control = &remoteControl;
     if (FLAGS_add_ssh_timeout > 0)
@@ -89,12 +89,47 @@ int main(int argc, char **argv) {
     command.set_loop_times(FLAGS_max_loop_times);
     if (FLAGS_no_abrt)
         command.set_no_abrt();
-    switch (configFile.get_strategy()) {
+    if (!FLAGS_udp) {
+        TcpSocket tcpSocket(configFile.get_port());
+        TcpNetwork tcpNetwork(&tcpSocket, FLAGS_half_duplex_connection);
+        net = &tcpNetwork;
+        switch (configFile.get_strategy()) {
+            case STRATEGY_DIRECT:
+                tcpNetwork.run_epoll();
+                break;
+            case STRATEGY_FILE:
+                tcpNetwork.run_epoll_background().detach();
+                command.set_file_mode();
+                command.read_file(configFile.get_cmd_file());
+                command.run_read_cmd();
+                if (FLAGS_no_exit) {
+                    command.set_cmd_mode();
+                    threads.push_back(command.run_read_cmd_background());
+                    Repl repl;
+                    repl.readline();
+                }
+                break;
+            case STRATEGY_CMD: {
+                tcpNetwork.run_epoll_background().detach();
+                threads.push_back(command.run_read_cmd_background());
+                Repl repl;
+                repl.readline();
+                break;
+            }
+            default:
+                assert(0);
+        }
+    } else {
+        UdpSokcet udpSocket(configFile.get_port());
+        signal(SIGPIPE, SIG_IGN);
+        UdpNetwork udpNetwork(&udpSocket);
+        udpNet = &udpNetwork;
+        switch (configFile.get_strategy()) {
         case STRATEGY_DIRECT:
-            tcpNetwork.run_epoll();
+            udpNetwork.run_epoll();
             break;
-        case STRATEGY_FILE:
-            tcpNetwork.run_epoll_background().detach();
+        case STRATEGY_FILE:{
+            udpNetwork.run_epoll_background().detach();
             command.set_file_mode();
             command.read_file(configFile.get_cmd_file());
             command.run_read_cmd();
@@ -105,8 +140,9 @@ int main(int argc, char **argv) {
                 repl.readline();
             }
             break;
+        }
         case STRATEGY_CMD: {
-            tcpNetwork.run_epoll_background().detach();
+            udpNetwork.run_epoll_background().detach();
             threads.push_back(command.run_read_cmd_background());
             Repl repl;
             repl.readline();
@@ -114,6 +150,7 @@ int main(int argc, char **argv) {
         }
         default:
             assert(0);
+        }
     }
     for (auto &i: threads) {
         i.join();

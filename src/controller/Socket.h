@@ -19,7 +19,7 @@ class Socket {
 public:
     static int set_nonblocking(int fd);
     virtual int socket() const = 0;
-    virtual AcceptData accept(int client_fd) const = 0;
+    // virtual AcceptData accept(int client_fd) const = 0;
 };
 
 

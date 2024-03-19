@@ -35,8 +35,11 @@ config-network:
 unconfig-network:
 	sudo scripts/batch_config_tproxy.sh -n 20 -b docker -c controller stop
 
+build-docker:
+	cd docker && docker-compose build
+
 start-docker: sync-docker-files
-	cd docker && docker-compose up --build -d
+	cd docker && docker-compose up -d
 	make build-sandtable-in-docker
 	make build-cpp-raft-driver-in-docker
 	make config-network
@@ -75,3 +78,4 @@ replay_zookeeper_vote_circle_bug:
 
 include systems/PySyncObj/Makefile.inc
 include systems/WRaft-series/Makefile.inc
+include systems/RaftOS/Makefile.inc

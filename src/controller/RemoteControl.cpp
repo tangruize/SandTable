@@ -187,6 +187,25 @@ bool RemoteControl::send_cmd_ssh(const string &node, const string &cmd) {
     return true;
 }
 
+// test: we need a command that can aysnc execute
+bool RemoteControl::send_cmd_ssh_asy(const string &node, const string &cmd) {
+    auto it = router_to_ssh.find(node);
+    if (it != router_to_ssh.end()) {
+        int ret = do_send(it->second, cmd + '\n');
+        if (ret != int(cmd.size()) + 1) {
+            close(it->second);
+            router_to_ssh.erase(it);
+            cerr_detail << "RemoteControl::send_cmd_ssh close node: " << node << endl;
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        cerr_warning << "RemoteControl::send_cmd_ssh cannot find node: " << node << endl;
+    }
+    return true;
+}
+
 bool RemoteControl::recv_ack(const string &node) {
     auto it = router_to_interceptor.find(node);
     if (it != router_to_interceptor.end()) {

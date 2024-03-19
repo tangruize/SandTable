@@ -26,6 +26,7 @@ public:
     int try_add_node(double timeout);
     int send_cmd_interceptor(const string &node, const string &cmd, int lineno);
     bool send_cmd_ssh(const string &node, const string &cmd);
+    bool send_cmd_ssh_asy(const string &node, const string &cmd);
     string get_cache_cmp_data() const {
         return cache_cmp_data;
     }
