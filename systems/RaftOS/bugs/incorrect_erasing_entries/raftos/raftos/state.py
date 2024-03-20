@@ -274,8 +274,7 @@ class Leader(BaseState):
                 commited_on_majority = index
 
             else:
-                # break    
-                continue
+                break    
         if commited_on_majority > self.log.commit_index:
             self.log.commit_index = commited_on_majority
 
@@ -432,37 +431,37 @@ class Follower(BaseState):
         
         # here may erase the log has been commited, we can add check 
 
-        # new_index = data['prev_log_index'] + 1
-        # try:
-        #     if self.log[new_index]['term'] != data['term'] or (
-        #         self.log.last_log_index != prev_log_index
-        #     ):
-        #         self.log.erase_from(new_index)
-        # except IndexError:
-        #     pass
-        is_append = True
         new_index = data['prev_log_index'] + 1
         try:
-            print("self.log[new_index]['term']", self.log[new_index]['term'])
-            print("data['entries'][1]['term'] ", data['entries'][0]['term'])
-            if self.log[new_index]['term'] != data['entries'][0]['term'] :
+            if self.log[new_index]['term'] != data['term'] or (
+                self.log.last_log_index != prev_log_index
+            ):
                 self.log.erase_from(new_index)
-            else :
-                is_append = False
         except IndexError:
             pass
+        # is_append = True
+        # new_index = data['prev_log_index'] + 1
+        # try:
+        #     print("self.log[new_index]['term']", self.log[new_index]['term'])
+        #     print("data['entries'][1]['term'] ", data['entries'][0]['term'])
+        #     if self.log[new_index]['term'] != data['entries'][0]['term'] :
+        #         self.log.erase_from(new_index)
+        #     else :
+        #         is_append = False
+        # except IndexError:
+        #     pass
         
-        if is_append:
-            for entry in data['entries']:
-                self.log.write(entry['term'], entry['command']) 
-            # It's always one entry for now
+        # if is_append:
+        #     for entry in data['entries']:
+        #         self.log.write(entry['term'], entry['command'])
+        #     # It's always one entry for now
 
 
         
 
         # It's always one entry for now
-        # for entry in data['entries']:
-        #     self.log.write(entry['term'], entry['command'])
+        for entry in data['entries']:
+            self.log.write(entry['term'], entry['command'])
 
         # Update commit index if necessary
         if self.log.commit_index < data['commit_index']:

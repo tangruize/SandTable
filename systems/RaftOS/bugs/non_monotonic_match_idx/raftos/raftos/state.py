@@ -231,13 +231,15 @@ class Leader(BaseState):
             self.log.next_index[sender_id] = max(self.log.next_index[sender_id] - 1, 1)
 
         else:
-            # here we find a bug, match index may decrease
-            if data['last_log_index'] > self.log.match_index[sender_id]:
-                self.log.next_index[sender_id] = data['last_log_index'] + 1
-                self.log.match_index[sender_id] = data['last_log_index']
-            else: 
-                #unchanged
-                pass
+            # # here we find a bug, match index may decrease
+            # if data['last_log_index'] > self.log.match_index[sender_id]:
+            #     self.log.next_index[sender_id] = data['last_log_index'] + 1
+            #     self.log.match_index[sender_id] = data['last_log_index']
+            # else:
+            #     #unchanged
+            #     pass
+            self.log.next_index[sender_id] = data['last_log_index'] + 1
+            self.log.match_index[sender_id] = data['last_log_index']
             
             print("nextIndex:", self.log.next_index)
             print("matchIndex:", self.log.match_index)
@@ -274,8 +276,7 @@ class Leader(BaseState):
                 commited_on_majority = index
 
             else:
-                # break    
-                continue
+                break    
         if commited_on_majority > self.log.commit_index:
             self.log.commit_index = commited_on_majority
 

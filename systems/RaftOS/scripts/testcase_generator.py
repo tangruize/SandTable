@@ -329,7 +329,8 @@ def yield_trace(states):
         nonlocal need_tick_twice
         yield ['deliver', str(msg_num)]
         yield ['#', 'deliver', dst, 'to', src]
-        # yield ['nop']
+        yield ['nop']
+        yield from do_tick(src)
     jq_trace = jq.compile('.[].netcmd')
     jq_msgs = jq.compile('.[].msgs')
     states_counter = 0
