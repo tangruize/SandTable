@@ -93,6 +93,7 @@ struct collector_popen collector_childinfo;
 int option_multi_ports = 0;
 int option_state_no_clear = 0;
 int option_state_no_fail_empty = 0;
+int option_udp = 0;
 
 struct sockaddr_in convert_mapped_ipv6_to_ipv4(const struct sockaddr_in6 *addr) {
     union {
@@ -381,6 +382,10 @@ void init_config_file() {
             } else if (tokens[1] == "state_no_clear") {
                 option_state_no_clear = 1;
                 ok = true;
+            } else if (tokens[1] == "udp") {
+                option_udp = 1;
+                ok = true;
+                reg_func_dict[SYS_sendto].state = (STATE_DISABLED | (reg_func_dict[SYS_sendto].state & STATE_LIBRARY));
             }
             else {
                 continue;

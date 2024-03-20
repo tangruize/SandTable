@@ -408,5 +408,21 @@ bool UdpNetwork::send_cmd(const string &node, const string &cmd, int lineno) {
     return ret == 0;
 }
 
+bool UdpNetwork::send_cmd_all(const string &prefix, const string &cmd, int lineno) {
+    bool ok = false;
+    cerr_detail << "Send cmd (" << prefix << " " << cmd << ") to all" << endl;
+    for (auto &i: client_to_fd) {
+        string node = configFile.get_node_name(i.first, false);
+        if (!node.empty()) {
+            string full_cmd = prefix;
+            full_cmd += " ";
+            full_cmd += cmd;
+            if (0 == remote_control->send_cmd_interceptor(node, full_cmd, lineno))
+                ok = true;
+        }
+    }
+    return ok;
+}
+
 
 UdpNetwork* udpNet;

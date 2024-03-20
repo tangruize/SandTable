@@ -411,7 +411,7 @@ def yield_trace(states):
                 raise e
             yield ['#', 'for read', my_msg_show]
             yield ['#', msgs_info_str]
-            yield ['compare', 'net']
+            # yield ['compare', 'net']
     # for i in nodes:
     #     yield ['execute', i, "print(data_id.get(1))"]
     eprint("Finish write:", args.output)

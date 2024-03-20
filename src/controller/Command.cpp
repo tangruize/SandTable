@@ -383,6 +383,8 @@ void Command::run_read_cmd() {
                     // print cmd in each node
                     if (!FLAGS_udp) {
                         net->send_cmd_all("print", c.get_args_from(1), cmd_counter);
+                    } else {
+                        udpNet->send_cmd_all("print", c.get_args_from(1), cmd_counter);
                     }
                 }
             } else {
