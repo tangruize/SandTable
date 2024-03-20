@@ -3,7 +3,7 @@
 source $(dirname "$(realpath "$0")")/env.sh
 source $START_DOCKER_COMMON_SH "$@"
 
-CLIENT=$CUR_SCRIPT_DIR/../kv-store/start.sh
+CLIENT=$(pwd)/../kv-store/start.sh
 
 HOST_CMD="-r 'sudo timeout --foreground $TIMEOUT $CONTROLLER -detail -config $CONFIG_FILE -tmpdir $TMPDIR -half_duplex_connection; exit'"
 

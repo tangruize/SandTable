@@ -46,12 +46,15 @@ node_port = None
 
 
 def parse_args():
+    global cli_path
     parser = argparse.ArgumentParser(description="Test case generator for Xraft")
     parser.add_argument(dest='trace_file', action='store', help='Trace file')
     parser.add_argument('-c', dest='config', action='store', required=True, help='Config file',
                         default=default_config)
     parser.add_argument('-o', dest='output', action='store', required=False, help='Output trace file',
                         default=default_output)
+    parser.add_argument('-p', dest='path', action='store', required=False, help='Xraft path',
+                        default=None)
     parser.add_argument('-f', dest='conn_fd', action='store', required=False,
                         help='Interceptor<->Controller connection fd', default=default_conn_fd)
     parser.add_argument('-n', dest='node_port', action='store', required=False, help='Port of test nodes',
@@ -82,6 +85,8 @@ def parse_args():
         # os.rename(arg_parser.trace_file, new_name)
         # arg_parser.trace_file = new_name
         os.chdir(test_case_dir)
+    if cli_path != arg_parser.path and arg_parser.path is not None:
+        cli_path = os.path.join(arg_parser.path, "kv-store", "cli.sh")
 
     return arg_parser
 
