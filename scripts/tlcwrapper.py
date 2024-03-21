@@ -23,15 +23,13 @@ wrapper_out_file=None
 
 def xprint(*args, **kwargs):
     if wrapper_out_file:
-        print(*args, **kwargs, file=wrapper_out_file)
-        wrapper_out_file.flush()
-    print(*args, **kwargs)
+        print(*args, **kwargs, file=wrapper_out_file, flush=True)
+    print(*args, **kwargs, flush=True)
 
 def eprint(*args, **kwargs):
     if wrapper_out_file:
-        print(*args, **kwargs, file=wrapper_out_file)
-        wrapper_out_file.flush()
-    print(*args, **kwargs, file=sys.stderr)
+        print(*args, **kwargs, file=wrapper_out_file, flush=True)
+    print(*args, **kwargs, file=sys.stderr, flush=True)
 
 class PrintTable:
     """Print CSV/Markdown table"""

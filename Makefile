@@ -50,8 +50,8 @@ stop-docker:
 
 #### system specific targets
 
-include systems/PySyncObj/Makefile.inc
-include systems/WRaft-series/Makefile.inc
-include systems/RaftOS/Makefile.inc
-include systems/Xraft-series/Makefile.inc
-include systems/ZooKeeper/Makefile.inc
+include systems/PySyncObj/Makefile
+include systems/WRaft-series/Makefile
+include systems/RaftOS/Makefile
+include systems/Xraft-series/Makefile
+include systems/ZooKeeper/Makefile
