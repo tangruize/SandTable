@@ -29,10 +29,10 @@ RUN apt-get install -y vim git wget curl sudo
 FROM tools as node
 RUN apt-get install -y libgflags2.2 libreadline8
 # Install python3.7 for RaftOS
-RUN sudo apt install -y software-properties-common
+RUN sudo apt-get install -y software-properties-common
 RUN sudo add-apt-repository ppa:deadsnakes/ppa \
-    && sudo apt update \
-    && sudo apt install -y python3.7-venv
+    && sudo apt-get update \
+    && sudo apt-get install -y python3.7-venv
 
 FROM tools as builder
 RUN apt-get install -y cmake build-essential libgflags-dev libreadline-dev libconcurrentqueue-dev
