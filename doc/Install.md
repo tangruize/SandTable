@@ -1,0 +1,102 @@
+# Install
+
+Below are the directions to install and run SandTable.
+
+We recommend running SandTable on a fresh Ubuntu 22.04 environment. Setting up a Ubuntu 22.04 container using LXD is simple (we have only tested SandTable on LXD Ubuntu 22.04 containers). However, LXD is not always necessary if your system is already running Ubuntu 22.04 or a more recent version.
+
+## Run SandTable inside an Ubuntu 22.04 LXD container
+
+We recommend using an LXD container to run SandTable to avoid dependency issues. If you prefer not to install LXD, you can treat your Linux host as the container `sandtable-lxc`.
+
+If you do not have a Linux environment to run LXD yet, please refer to [Install-Linux.md](./Install-Linux.md).
+
+### Install and configure LXD container
+
+Install LXD:
+
+```sh
+sudo snap install lxd
+sudo lxd init --auto
+## Ensure the current user is added to the lxd group
+sudo usermod -a -G lxd "$USER"
+## Check if the storage is correctly configured
+lxc storage list  # the DRIVER should be `zfs` or `btrfs`
+## If the driver is `dir`, let's create a btrfs driver; otherwise, no need to create
+lxc storage create btrfs btrfs size=40GiB
+```
+
+Initialize an Ubuntu 22.04 LXD container:
+
+```sh
+## If we manually created a btrfs driver, add `-s btrfs` option after the `lxc init ..` command
+## Note that the virtual machine image version in LXD has problems running SandTable, so do not add `--vm` option after `lxc init ..`
+lxc init ubuntu:22.04 sandtable-lxc # -s btrfs
+## Enable nesting to run Docker inside LXD containers
+lxc config set sandtable-lxc security.nesting=true
+lxc start sandtable-lxc
+## Enter the sandtable-lxc shell
+lxc exec sandtable-lxc -- su -l ubuntu
+```
+
+### Configure SandTable
+
+Install dependencies (inside sandtable-lxc):
+
+```sh
+sudo apt-get update
+sudo apt-get install -y docker.io docker-compose rsync git iptables make jq
+```
+
+Build docker (inside sandtable-lxc):
+
+```sh
+git clone https://github.com/tangruize/SandTable.git
+cd SandTable
+make build-docker
+```
+
+Start docker (inside sandtable-lxc):
+
+```sh
+## It will automatically compile SandTable and configure TPROXY
+make start-docker
+```
+
+## Reproduce bugs
+
+Here we provide some examples to reproduce bugs. For details, please refer to [TO-FILL](./to-fill.md)
+
+To check bugs at the specification level, the Makefile targets start with `check-`.
+For example, to check the Xraft multiple valid Leader bug:
+
+```sh
+make check_xraft_election_safety_bug
+```
+
+It will display the bug trace (which may differ from the following):
+
+```json
+["Init",3]
+["ElectionTimeout","n1"]
+["RecvRequestVote","voted","n3","n1"]
+["ElectionTimeout","n1"]
+["RecvRequestVoteResponse","become leader","n1","n3"]
+["ElectionTimeout","n3"]
+["RecvRequestVote","voted","n2","n3"]
+["RecvRequestVoteResponse","become leader","n3","n2"]
+```
+
+To replay bugs at the implementation level, the Makefile targets start with `replay-`.
+For example, to replay the Xraft multiple valid Leader bug:
+
+```sh
+make replay_xraft_election_safety_bug
+```
+
+It will provide information about the bug:
+
+```txt
+grep -r "become leader, term" build/mount/systems/Xraft-series/bugs/election_safety/test/log*
+build/mount/systems/Xraft-series/bugs/election_safety/test/log.1:2022-06-04 05:36:58.200 [node] INFO  node.NodeImpl - become leader, term 2
+build/mount/systems/Xraft-series/bugs/election_safety/test/log.3:2022-06-04 05:36:54.100 [node] INFO  node.NodeImpl - become leader, term 2
+```
