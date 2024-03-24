@@ -20,3 +20,5 @@ Config changes in config.py:
 ---
 >         self.connectionRetryTime = kwargs.get('connectionRetryTime', 0.05)
 ```
+
+Update [monotonic.py](https://github.com/atdt/monotonic) file to support time interception on OpenBSD.

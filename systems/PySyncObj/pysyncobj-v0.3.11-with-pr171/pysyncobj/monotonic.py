@@ -2,11 +2,14 @@
 """
   monotonic
   ~~~~~~~~~
+
   This module provides a ``monotonic()`` function which returns the
   value (in fractional seconds) of a clock which never goes backwards.
+
   On Python 3.3 or newer, ``monotonic`` will be an alias of
   ``time.monotonic`` from the standard library. On older versions,
   it will fall back to an equivalent implementation:
+
   +-------------+----------------------------------------+
   | Linux, BSD  | ``clock_gettime(3)``                   |
   +-------------+----------------------------------------+
@@ -14,19 +17,26 @@
   +-------------+----------------------------------------+
   | OS X        | ``mach_absolute_time``                 |
   +-------------+----------------------------------------+
+
   If no suitable implementation exists for the current platform,
   attempting to import this module (or to import from it) will
   cause a ``RuntimeError`` exception to be raised.
+
+
   Copyright 2014, 2015, 2016 Ori Livneh <ori@wikimedia.org>
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
+
 """
 import time
 
@@ -35,9 +45,7 @@ __all__ = ('monotonic',)
 
 
 try:
-    time.CLOCK_MONOTONIC_RAW
-    time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
-    monotonic = lambda: time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
+    monotonic = time.monotonic
 except AttributeError:
     import ctypes
     import ctypes.util
@@ -60,11 +68,12 @@ except AttributeError:
 
             timebase = mach_timebase_info_data_t()
             libc.mach_timebase_info(ctypes.byref(timebase))
-            ticks_per_second = timebase.numer / timebase.denom * 1.0e9
+            nanoseconds_in_second = 1.0e9
 
             def monotonic():
                 """Monotonic clock, cannot go backward."""
-                return mach_absolute_time() / ticks_per_second
+                nanoseconds = mach_absolute_time() * timebase.numer / timebase.denom
+                return nanoseconds / nanoseconds_in_second
 
         elif sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
             if sys.platform.startswith('cygwin'):
@@ -135,7 +144,7 @@ except AttributeError:
                             ('tv_nsec', ctypes.c_long))
 
             if sys.platform.startswith('linux'):
-                CLOCK_MONOTONIC = 4  # actually this is CLOCK_MONOTONIC_RAW
+                CLOCK_MONOTONIC = 1
             elif sys.platform.startswith('freebsd'):
                 CLOCK_MONOTONIC = 4
             elif sys.platform.startswith('sunos5'):
@@ -158,5 +167,4 @@ except AttributeError:
             raise ValueError('monotonic() is not monotonic!')
 
     except Exception as e:
-        monotonic = lambda: time.time()
-
+        raise RuntimeError('no suitable implementation for this system: ' + repr(e))
