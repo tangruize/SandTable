@@ -49,7 +49,7 @@ export START_DOCKER_COMMON_SH=${SCRIPT_DIR}/common/start_docker_common.sh
 export WAIT_TMUX_COMMON_SH=${SCRIPT_DIR}/common/wait_tmux_common.sh
 
 BUILD_DIR=.
-if ! test -f /.dockerenv; then
+if ! test -f /.dockerenv && ! test $BACKEND; then
     BUILD_DIR=build
 fi
 SANDTABLE_BUILD_DIR=$PROJECT_DIR/$BUILD_DIR/cmake-build-debug

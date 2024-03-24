@@ -4,11 +4,11 @@ The Linux environment must fulfill the following requirements: it should be capa
 
 If you are already using a Linux host, you can skip this section.
 
-## Installing Ubuntu 22.04 on Host/VirtualBox
+## Installing Ubuntu on Host/VirtualBox
 
-Download [ubuntu-22.04.4-desktop-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.4-desktop-amd64.iso) or Ubuntu 24.04 and install it on a physical or virtual machine.
+Download Ubuntu 24.04 iso or Ubuntu 22.04 iso and install it on a physical or virtual machine (e.g., VirtualBox).
 
-Tip: The graphical installation guide of Ubuntu 22.04.4 supports installing root on ZFS (Erase disk and use ZFS), which works better with LXD compared to EXT4. For enhanced ZFS functionality, it is recommended to install ZFS 2.2 (to support ZFS delegation), which is available on Ubuntu 23.10 and 24.04.
+Tip: The graphical installation guide of Ubuntu>=22.04 supports installing root filesystem on ZFS (Erase disk and use ZFS), which works better with LXD compared to EXT4. For enhanced ZFS functionality, it is recommended to install ZFS 2.2 (to support ZFS delegation), which is available on Ubuntu 23.10 and 24.04.
 
 ## Installing Ubuntu 22.04 on WSL2
 
@@ -21,13 +21,15 @@ git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
 cd WSL2-Linux-Kernel
 git checkout linux-msft-wsl-6.1.y
 cp Microsoft/config-wsl .config
+## We do not config ZFS because ZFS does not directly support to run inside a container (the real root directory is masked due to mount namespaces).
+## Linux distributions run as isolated containers inside of the WSL 2 managed VM.
 cat <<EOF >>.config
 # To support TPROXY
 CONFIG_NFT_TPROXY=y
 CONFIG_NETFILTER_XT_TARGET_TPROXY=y
 CONFIG_NF_TPROXY_IPV4=y
 CONFIG_NF_TPROXY_IPV6=y
-# Optional configs to support LXD virtual machines
+# Optional configs to support LXD virtual machines (required if we want to try Install-OpenBSD.md)
 CONFIG_VIRTIO_VSOCKETS_COMMON=m
 CONFIG_VHOST_IOTLB=m
 CONFIG_VHOST=m
@@ -47,12 +49,12 @@ To configure the WSL2 kernel, edit `%HOMEPATH%/.wslconfig`:
 ```conf
 [wsl2]
 kernel=C:\\path\\to\\bzImage
+kernelCommandLine = cgroup_no_v1=all  # Optional to run nested LXD containers
+nestedVirtualization=true  # Optional to run LXD VMs
 ## Optional configs below
-kernelCommandLine = cgroup_no_v1=all
-nestedVirtualization=true
 #localhostforwarding=true
 #guiApplications=false
-#memory=4GB
+#memory=8GB
 #processors=4
 ```
 

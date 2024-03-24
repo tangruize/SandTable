@@ -17,7 +17,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define ROUTER_FD 1022
+// #ifdef __linux__
+// #define ROUTER_FD 1022
+// #elif defined(__unix__)
+// #define ROUTER_FD 126 // openbsd max is 128?
+// #endif
+#define ROUTER_FD 126
 
 //#define ADDR_FMT "%s:%d"
 //#define ADDR_TO_STR(addr) rstr1(inet_ntoa(((const struct sockaddr_in*)addr)->sin_addr)), ntohs(((const struct sockaddr_in*)addr)->sin_port)

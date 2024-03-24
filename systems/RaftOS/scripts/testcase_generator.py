@@ -32,7 +32,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 default_path = '/root/sandtable/systems/RaftOS/raftos'
 default_config = 'config.txt'
 default_output = 'traces.txt'
-default_conn_fd = 1022
+default_conn_fd = 126
 default_node_port = 10200
 default_debug = False
 nodes = dict()
@@ -229,7 +229,7 @@ def read_execute():
             exec(line, globals())
         except Exception as e:
             print('Error: triggered an exception', file=sys.stderr)
-            os.write(1022, b'1')
+            os.write(126, b'1')
             raise e
         reply(res)
 

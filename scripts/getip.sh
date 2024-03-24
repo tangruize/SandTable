@@ -2,7 +2,7 @@
 
 #set -x
 function usage() {
-    echo "Usage: getip.sh [-format] [-backend lxc/docker/dig] [-port router_port]"
+    echo "Usage: getip.sh [-format] [-backend lxc/docker/dig] [-port router_port] [-nameserver @x]"
     echo "                [-family inet/inet6] [-interface eth0/enp5s0] [-scope global/local/link]"
     echo "                CONTAINER_NAME .."
     exit 1
@@ -59,6 +59,10 @@ while [ "${1:0:1}" = "-" ]; do
             SCOPE="$2"
             shift 2
             ;;
+        -n | -nameserver | --nameserver)
+            NAMESERVER="$2"
+            shift 2
+            ;;
         *)
             usage
             ;;
@@ -80,7 +84,7 @@ while test "$1"; do
     elif test "$BACKEND" = lxc; then
         IP=$(get_lxc_container_ip "$CONTAINER" "$FAMILY" "$INTERFACE" "$SCOPE" | head -1)
     else
-        IP=$(dig -4 +short "$CONTAINER" | head -1)
+        IP=$(dig ${NAMESERVER} -4 +short "$CONTAINER" | head -1)
     fi
     _EXIT_STATUS=$?
 

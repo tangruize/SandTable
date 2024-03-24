@@ -32,7 +32,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 default_path = '/root/sandtable/systems/PySyncObj/pysyncobj'
 default_config = 'config.txt'
 default_output = 'traces.txt'
-default_conn_fd = 1022
+default_conn_fd = 126
 default_node_port = 10200
 default_debug = False
 nodes = dict()
@@ -328,8 +328,8 @@ def yield_trace(states):
                         msgs_info_str += ' {}({})'.format(dst, len(msg[src][dst]))
                 yield ['#', msgs_info_str]
             yield ['compare', 'net']
-    for i in nodes:
-        yield ['execute', i, "print(dict1['key'])"]
+    # for i in nodes:
+    #     yield ['execute', i, "print(dict1['key'])"]
     eprint("Finish write:", args.output)
 
 

@@ -2,7 +2,7 @@
 
 Below are the directions to install and run SandTable.
 
-We recommend running SandTable on a fresh Ubuntu 22.04 environment. Setting up a Ubuntu 22.04 container using LXD is simple (we have only tested SandTable on LXD Ubuntu 22.04 containers). However, LXD is not always necessary if your system is already running Ubuntu 22.04 or a more recent version.
+We recommend running SandTable on a fresh Ubuntu environment (at least 20.04, recommend >= 22.04). Setting up a Ubuntu 22.04 container using LXD is simple. However, LXD is not always necessary if your system is already running Ubuntu 20.04 or a more recent version.
 
 ## Run SandTable inside an Ubuntu 22.04 LXD container
 
@@ -12,13 +12,16 @@ If you do not have a Linux environment to run LXD yet, please refer to [Install-
 
 ### Install and configure LXD container
 
-Install LXD:
+Install and configure LXD:
 
 ```sh
 sudo snap install lxd
-sudo lxd init --auto
+## For storage drivers. It is OK to install one of them (e.g., ZFS is not supported on WSL2)
+sudo apt-get install zfsutils-linux btrfs-progs
+## Choose default for most options. For storage, if Ubuntu host >= 23.10, choose ZFS, otherwise choose BTRFS
+sudo lxd init
 ## Ensure the current user is added to the lxd group
-sudo usermod -a -G lxd "$USER"
+sudo usermod -a -G lxd "$USER"  # log out and re-login
 ## Check if the storage is correctly configured
 lxc storage list  # the DRIVER should be `zfs` or `btrfs`
 ## If the driver is `dir`, let's create a btrfs driver; otherwise, no need to create
@@ -34,7 +37,7 @@ lxc init ubuntu:22.04 sandtable-lxc # -s btrfs
 ## Enable nesting to run Docker inside LXD containers
 lxc config set sandtable-lxc security.nesting=true
 lxc start sandtable-lxc
-## Enter the sandtable-lxc shell
+## Enter the sandtable-lxc shell (For root shell, run `lxc shell sandtable-lxc`)
 lxc exec sandtable-lxc -- su -l ubuntu
 ```
 
@@ -50,6 +53,8 @@ sudo apt-get install -y docker.io docker-compose rsync git iptables make jq
 Build docker (inside sandtable-lxc):
 
 ```sh
+## Ensure the current user is added to the docker group
+sudo usermod -a -G docker "$USER"  # log out and re-login
 git clone https://github.com/tangruize/SandTable.git
 cd SandTable
 make build-docker

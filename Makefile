@@ -35,6 +35,12 @@ config-network:
 unconfig-network:
 	sudo scripts/batch_config_tproxy.sh -n 20 -b docker -c controller stop
 
+config-network-lxd:
+	sudo scripts/batch_config_tproxy.sh -n 20 -b lxc -c sandtable-lxc start
+
+unconfig-network-lxd:
+	sudo scripts/batch_config_tproxy.sh -n 20 -b lxc -c sandtable-lxc stop
+
 build-docker:
 	cd docker && docker-compose build
 

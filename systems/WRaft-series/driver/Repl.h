@@ -14,7 +14,8 @@ private:
     const char *prompt   = "\033[1;36m" "(REPL) " "\033[0m";
     const char *ok_str   = "\033[1;32m" "[OK]"    "\033[0m";  // bold green
     const char *fail_str = "\033[1;31m" "[FAIL]"  "\033[0m";  // bold red
-    int interceptor_fd = 1022;
+    // int interceptor_fd = 1022;
+    int interceptor_fd = 126;
     void check_interceptor_fd();
     void ack(const string &data) const;
 public:

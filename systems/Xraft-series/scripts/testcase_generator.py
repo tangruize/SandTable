@@ -37,7 +37,8 @@ from trace_reader import TraceReader
 
 default_config = 'config.txt'
 default_output = 'traces.txt'
-default_conn_fd = 1022
+# default_conn_fd = 1022
+default_conn_fd = 126
 default_node_port = 2333
 default_client_port = 3333
 default_debug = False

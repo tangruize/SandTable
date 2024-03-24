@@ -152,9 +152,9 @@ static int print_comments(const vector<string> &tokens) {
 
 static void do_router_cmd() {
     CLOCK_START_RECORD2;
-    string cmd_buffer;
-    cmd_buffer.resize(1024);
-    cmd_buffer[cmd_buffer.size() - 1] = 0;
+#define CMD_BUFFER_SIZE 1024
+    char cmd_buffer[CMD_BUFFER_SIZE];
+    bzero(cmd_buffer, CMD_BUFFER_SIZE);
     ssize_t size;
     map<string, int (*)(const vector<string> &)> cmd_map = {
             {"inc_time_ns", inc_time_ns},
@@ -165,24 +165,28 @@ static void do_router_cmd() {
             {"state_get", state_get},
             {"print", print_comments}
     };
-    struct hacked_sendto_header *header = (hacked_sendto_header *) (&cmd_buffer.front());
+    struct hacked_sendto_header *header = (hacked_sendto_header *) (cmd_buffer);
     CLOCK_END_RECORD2;
     
-    while ((size = _syscall_(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), sizeof(hacked_sendto_header), MSG_WAITALL, 0, 0)) > 0) {
+    while ((size = _syscall_(SYS_recvfrom, router_sockfd, cmd_buffer, sizeof(hacked_sendto_header), MSG_WAITALL, 0, 0)) > 0) {
 //        print_info("validation: %x\n", ntohl(header->validation));
         CLOCK_START_RECORD;
         assert(ntohl(header->validation) == VALIDATE_STR);
         size = ntohl(header->size);
-        if (size >= (ssize_t)cmd_buffer.size())
-            cmd_buffer.resize(size + 1);
-        size = _syscall_(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), size, MSG_WAITALL, 0, 0);
+        if (size >= CMD_BUFFER_SIZE) {
+            print_info_stderr("Error: cmd size too large: %d\n", size);
+            size = -1;
+            errno = EINVAL;
+            break;
+        }
+        size = _syscall_(SYS_recvfrom, router_sockfd, cmd_buffer, size, MSG_WAITALL, 0, 0);
         if (size <= 0) {
             break;
         }
         cmd_buffer[size] = 0;
         vector<string> tokens;
-        int32_t lineno = ntohl(*(int32_t *)&cmd_buffer.front());
-        if (!get_tokens(cmd_buffer.c_str() + 4, &tokens)) {
+        int32_t lineno = ntohl(*(int32_t *)cmd_buffer);
+        if (!get_tokens(cmd_buffer + 4, &tokens)) {
             continue;
         }
         print_info("Router cmd (line %d): %s\n", lineno, tokens_to_string(tokens).c_str());
@@ -209,8 +213,8 @@ static void do_router_cmd() {
         //exit(0);
         _exit(0);
     } else {
-        _syscall_(SYS_close, router_sockfd);
         print_info("Router socket recv failed: %s\n", strerror(errno));
+        _syscall_(SYS_close, router_sockfd);
     }
 }
 

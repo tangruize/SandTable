@@ -81,7 +81,9 @@ static void print_info_va(int flags, const char *format, va_list ap) {
             write_iov[0].iov_len = write_iov[0].iov_len - 7 - 4;
         }
     }
-    _syscall_(SYS_writev, fd, write_iov, sizeof(write_iov)/sizeof(write_iov[0]));
+    if (_syscall_ != NULL) {
+        _syscall_(SYS_writev, fd, write_iov, sizeof(write_iov)/sizeof(write_iov[0]));
+    }
 }
 
 void print_info_internal(int flags, const char *format, ...) {

@@ -21,11 +21,12 @@
 
 #define UNUSED(x) (void)(x)
 
-#ifdef __linux__
-#define MY_STDERR_FILENO 1023
-#elif defined(__unix__)
-#define MY_STDERR_FILENO 127 // openbsd max is 128?
-#endif
+// #ifdef __linux__
+// #define MY_STDERR_FILENO 1023
+// #elif defined(__unix__)
+// #define MY_STDERR_FILENO 127 // openbsd max is 128?
+// #endif
+#define MY_STDERR_FILENO 127
 
 #define STATE_UNUSED    0
 #define STATE_ENABLED   1

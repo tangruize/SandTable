@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
-function usage() {
+usage() {
   echo "$0 [-library LIBRARY_FILE] [-config CONFIG_FILE] COMMAND [ARGS]"
   exit 1
 }
 
-function check() {
+check() {
   if [ -n "$1" -a ! -r "$1" ]; then
     echo "Error: cannot read file \"$1\""
     exit 1
@@ -22,7 +22,7 @@ if [ -n "${LIBRARY}" ]; then
   LIBRARY="${LIBRARY}"
 fi
 
-while [ "${1:0:1}" = "-" ]; do
+while [ $(printf %.1s "$1") = "-" ]; do
   case "$1" in
   -c|-config|--config)
     export "MYSYSCALL_CONFIG=$2"
