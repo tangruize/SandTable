@@ -8,7 +8,7 @@
 
 //MAKE_COUNTER_TEMPLATE(SYS, int, gettimeofday, struct timeval *__restrict tv, void *__restrict tz) { CALL(gettimeofday, tv, tz); }
 
-MAKE_SYS_TEMPLATE(int, gettimeofday, struct timeval *tv, void *tz) {
+MAKE_SYS_TEMPLATE(int, gettimeofday, struct timeval *tv, GETTIMEOFDAY_TYPE tz) {
     CLOCK_START_RECORD;
     if (!check_count_intercepted(CUR_SYSCALL))
         return real_gettimeofday(tv, tz);

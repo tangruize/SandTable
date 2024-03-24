@@ -5,16 +5,20 @@
 #include "common.h"
 #include "myopen.h"
 
-#ifndef _FCNTL_H
-#define	_FCNTL_H
-#endif
-#include <bits/fcntl.h>  // O_CREAT and O_TMPFILE
+//#ifndef _FCNTL_H
+//#define	_FCNTL_H
+//#endif
+#include <fcntl.h>  // O_CREAT and O_TMPFILE
 #include <stdarg.h>
 
 MAKE_SYS_TEMPLATE(int, open, const char *pathname, int flags, ...) {
     int ret;
     mode_t mode = 0;
-    if (flags & (O_CREAT | O_TMPFILE)) {
+    if (flags & (O_CREAT
+#ifdef __linux__
+                | O_TMPFILE
+#endif
+    )) {
         va_list ap;
         va_start(ap, flags);
         mode = va_arg(ap, mode_t);

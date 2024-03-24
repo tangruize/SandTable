@@ -5,6 +5,14 @@
 #ifndef MYSYSCALL_MYGETTIMEOFDAY_H
 #define MYSYSCALL_MYGETTIMEOFDAY_H
 
-int gettimeofday(struct timeval *tv, void *tz);
+#include <sys/time.h>
+
+#ifdef __linux__
+#define GETTIMEOFDAY_TYPE void *
+#elif defined(__unix__)
+#define GETTIMEOFDAY_TYPE struct timezone *
+#endif
+
+int gettimeofday(struct timeval *tv, GETTIMEOFDAY_TYPE tz);
 
 #endif //MYSYSCALL_MYGETTIMEOFDAY_H

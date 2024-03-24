@@ -5,8 +5,7 @@
 #ifndef MYSYSCALL_TIMING_H
 #define MYSYSCALL_TIMING_H
 
-#include <bits/types/struct_timespec.h>
-#include <bits/time.h>
+#include <time.h>
 #include <pthread.h>
 
 #define S_TO_NS  1000000000

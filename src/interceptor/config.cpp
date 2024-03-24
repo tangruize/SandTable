@@ -8,6 +8,7 @@ extern "C" {
 #include "router.h"
 #include "fcntl.h"
 #include "state_collector.h"
+#include "mysyscall.h"
 }
 
 #include <map>
@@ -21,6 +22,7 @@ extern "C" {
 #include <thread>
 
 #include <unistd.h>
+#include <sys/socket.h>
 
 using namespace std;
 
@@ -256,7 +258,7 @@ static int init_log_fd(int fd, const string &path) {
         print_info_no_prompt("  - WARN: invalid fd (%d) to log for \"%s\"\n", fd, path.c_str());
         return false;
     }
-    *log_fd = syscall(SYS_open, path.c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);  // O_CLOEXEC?
+    *log_fd = _syscall_(SYS_open, path.c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);  // O_CLOEXEC?
     if (*log_fd == -1) {
          print_info_no_prompt("  - WARN: failed to open \"%s\": %s\n", path.c_str(), strerror(errno));
          return false;
@@ -269,40 +271,40 @@ static int init_collector(const string &cmdline) {
     int pipe_stdin[2], pipe_stdout[2];
     struct collector_popen *childinfo = &collector_childinfo;
 
-    if (syscall(SYS_pipe, pipe_stdin) == -1 || syscall(SYS_pipe, pipe_stdout) == -1) {
+    if (_syscall_(SYS_pipe, pipe_stdin) == -1 || _syscall_(SYS_pipe, pipe_stdout) == -1) {
         print_info_no_prompt("  - WARN: failed to init collector pipes: %s", strerror(errno));
         goto failed;
     }
 
-    p = syscall(SYS_fork);
+    p = _syscall_(SYS_fork);
     if (p < 0) {
         print_info_no_prompt("  - WARN: failed to fork: %s", strerror(errno));
         goto failed;
     }
     else if(p == 0) { // child
         unsetenv("LD_PRELOAD");  // not to preload for child
-        syscall(SYS_close, pipe_stdin[1]);
-        syscall(SYS_dup2, pipe_stdin[0], 0);
-        syscall(SYS_close, pipe_stdout[0]);
-        syscall(SYS_dup2, pipe_stdout[1], 1);
-        syscall(SYS_dup2, MY_STDERR_FILENO, STDERR_FILENO);
-        syscall(SYS_close, MY_STDERR_FILENO);
+        _syscall_(SYS_close, pipe_stdin[1]);
+        _syscall_(SYS_dup2, pipe_stdin[0], 0);
+        _syscall_(SYS_close, pipe_stdout[0]);
+        _syscall_(SYS_dup2, pipe_stdout[1], 1);
+        _syscall_(SYS_dup2, MY_STDERR_FILENO, STDERR_FILENO);
+        _syscall_(SYS_close, MY_STDERR_FILENO);
         execl("/bin/sh", "sh", "-c", cmdline.c_str(), NULL);
         print_info_no_prompt("  - WARN: failed to execl: %s", strerror(errno));
-        syscall(SYS_exit, EXIT_FAILURE);
+        _syscall_(SYS_exit, EXIT_FAILURE);
     }
     childinfo->child_pid = p;
     childinfo->to_child = pipe_stdin[1];
     childinfo->from_child = pipe_stdout[0];
-    syscall(SYS_close, pipe_stdin[0]);
-    syscall(SYS_close, pipe_stdout[1]);
+    _syscall_(SYS_close, pipe_stdin[0]);
+    _syscall_(SYS_close, pipe_stdout[1]);
     std::thread(state_collect_thread).detach();
     return true;
 failed:
-    syscall(SYS_close, pipe_stdin[0]);
-    syscall(SYS_close, pipe_stdin[1]);
-    syscall(SYS_close, pipe_stdout[0]);
-    syscall(SYS_close, pipe_stdout[1]);
+    _syscall_(SYS_close, pipe_stdin[0]);
+    _syscall_(SYS_close, pipe_stdin[1]);
+    _syscall_(SYS_close, pipe_stdout[0]);
+    _syscall_(SYS_close, pipe_stdout[1]);
     return false;
 }
 

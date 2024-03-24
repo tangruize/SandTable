@@ -5,10 +5,10 @@
 #ifndef MYSYSCALL_MYCONNECT_H
 #define MYSYSCALL_MYCONNECT_H
 
-#ifndef _SYS_SOCKET_H
-#define _SYS_SOCKET_H
-#endif
-#include <bits/socket.h>
+//#ifndef _SYS_SOCKET_H
+//#define _SYS_SOCKET_H
+//#endif
+#include <sys/socket.h>
 
 int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 

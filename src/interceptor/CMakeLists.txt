@@ -29,10 +29,8 @@ add_library(${LIB_NAME} SHARED mysyscall.c mysyscall.h myclock_gettime.c myclock
 set_property(TARGET ${LIB_NAME} APPEND PROPERTY SOURCES timing.c timing.h state_collector.cpp state_collector.h router.cpp router.h config.cpp config.h common.c common.h)
 # use version map to expose symbols
 set_target_properties(${LIB_NAME} PROPERTIES LINK_DEPENDS "${VERSION_FILE}")
-# dl: link against libdl.so (for dlsym())
-# --entry: define a my_entry() to act as main(), to show usages
 # --version-script: define global symbols to export
-target_link_libraries(${LIB_NAME} dl "-Wl,--entry,my_entry -Wl,--version-script,${VERSION_FILE}")
+target_link_libraries(${LIB_NAME} "-Wl,--version-script,${VERSION_FILE}")
 # generate a run script
 add_custom_command(OUTPUT "${RUN_SCRIPT}"
         COMMAND sed -e 's,\$\${LIBRARY},${CMAKE_CURRENT_BINARY_DIR}/lib${LIB_NAME}.so,g'

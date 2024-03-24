@@ -6,7 +6,7 @@
 #include "myclock_gettime.h"
 #include "timing.h"
 
-#include <bits/time.h>
+#include <time.h>
 #include <unistd.h>
 
 //MAKE_COUNTER_TEMPLATE(SYS, int, clock_gettime, clockid_t clockid, struct timespec *tp) {
@@ -21,13 +21,17 @@ MAKE_SYS_TEMPLATE(int, clock_gettime, clockid_t clockid, struct timespec *tp) {
     ret = increase_time(NULL);
     switch (clockid) {
         case CLOCK_REALTIME:
+#ifdef __linux__
         case CLOCK_REALTIME_COARSE:
+#endif
             *tp = get_real_time_after(&ret);
             break;
         case CLOCK_MONOTONIC:
+        case CLOCK_BOOTTIME:
+#ifdef __linux__
         case CLOCK_MONOTONIC_COARSE:
         case CLOCK_MONOTONIC_RAW:
-        case CLOCK_BOOTTIME:
+#endif
             tp->tv_sec = ret.tv_sec;
             tp->tv_nsec = ret.tv_nsec;
             break;

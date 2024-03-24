@@ -4,10 +4,13 @@
 
 #include "common.h"
 #include "config.h"
+#include "mysyscall.h"
+#include "mytime.h"
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <sys/uio.h>
 
 struct reg_func_t reg_func_dict[NR_REG_FUNC_DICT];
 // the last one is used for summary info
@@ -22,8 +25,18 @@ int is_inited = 0;
 // in case the program close stderr (usually in destructors)
 __attribute__((constructor, unused))  // unused is no use, just to make clion happy
 static void init_common() {
+    if (_syscall_ == NULL) {
+        fprintf(stderr, "ERROR: _syscall_ symbol is null!\n");
+        return;
+    }
     CLOCK_START_RECORD;
     const char *program_path = getenv("PROGRAM_PATH");
+
+#ifdef __linux__
+#elif defined(__unix__)
+    const char *program_invocation_name = getprogname();
+#endif
+
     if (program_path && strcmp(program_invocation_name, program_path) != 0) {
         is_inited = 1;
         print_info_stderr("program_invocation_name is \"%s\", PROGRAM_PATH is \"%s\"\n", program_invocation_name, program_path);
@@ -34,7 +47,11 @@ static void init_common() {
     if (is_inited)
         return;
     is_inited = 1;
-    syscall(SYS_dup2, STDERR_FILENO, MY_STDERR_FILENO);
+    if (MY_STDERR_FILENO != 2) {
+        if (_syscall_(SYS_dup2, STDERR_FILENO, MY_STDERR_FILENO) == -1) {
+            print_info_stderr("ERROR: dup2 failed: %s\n", strerror(errno));
+        }
+    }
     print_info("Program %s\n", program_invocation_name);
     init_config_file();
     strcpy(reg_func_dict[NR_REG_FUNC_DICT-1].name, "FUNCS");
@@ -64,7 +81,7 @@ static void print_info_va(int flags, const char *format, va_list ap) {
             write_iov[0].iov_len = write_iov[0].iov_len - 7 - 4;
         }
     }
-    syscall(SYS_writev, fd, write_iov, sizeof(write_iov)/sizeof(write_iov[0]));
+    _syscall_(SYS_writev, fd, write_iov, sizeof(write_iov)/sizeof(write_iov[0]));
 }
 
 void print_info_internal(int flags, const char *format, ...) {
@@ -120,7 +137,14 @@ void log_intercepted(unsigned nr_syscall)
 #if defined(PRINT_FIRST_USAGE) || defined(PRINT_EVERY_USAGE)
     {
 #if defined(NO_PRINT_TIME_SYSCALLS)
-        if (nr_syscall == SYS_time || nr_syscall == SYS_clock_gettime || nr_syscall == SYS_gettimeofday)
+#ifdef __linux__
+        if (nr_syscall == SYS_time)
+            return;
+#elif defined(__unix__)
+        if (nr_syscall == LIB_time)
+            return;
+#endif
+        if (nr_syscall == SYS_clock_gettime || nr_syscall == SYS_gettimeofday)
             return;
 #endif
         va_list ap;
@@ -129,7 +153,7 @@ void log_intercepted(unsigned nr_syscall)
             format = reg_func_dict[nr_syscall].name;
         char format_buf[MAX_MSG_LEN];
         snprintf(format_buf, sizeof(format_buf), "Call %ld/%ld, %s\n",
-                 reg_func_dict[nr_syscall].concerned_count, reg_func_dict[nr_syscall].count, format);
+                 (long)reg_func_dict[nr_syscall].concerned_count, (long)reg_func_dict[nr_syscall].count, format);
         print_info_va(0, format_buf, ap);
         va_end(ap);
     }
@@ -186,14 +210,14 @@ void print_statistics() {
 
 __thread int saved_errno;
 
-// show usage msg
-void __attribute__((unused)) my_entry() {
-#define USAGE_MSG "Usage: env LD_PRELOAD=/path/to/libmysyscall.so [" CONFIG_FILE_ENV "=CONFIG_FILE] COMMAND [ARGS]\n"
-    syscall(SYS_write, STDERR_FILENO, USAGE_MSG, sizeof(USAGE_MSG)-1);
-    syscall(SYS_exit, 1);
-}
+// // show usage msg
+// void __attribute__((unused)) my_entry() {
+// #define USAGE_MSG "Usage: env LD_PRELOAD=/path/to/libmysyscall.so [" CONFIG_FILE_ENV "=CONFIG_FILE] COMMAND [ARGS]\n"
+//     _syscall_(SYS_write, STDERR_FILENO, USAGE_MSG, sizeof(USAGE_MSG)-1);
+//     _syscall_(SYS_exit, 1);
+// }
 
-#ifndef LD_LOADER
-#define LD_LOADER "/lib64/ld-linux-x86-64.so.2"
-#endif
-const char ld_loader[] __attribute__((section(".interp"), unused)) = LD_LOADER;
+// #ifndef LD_LOADER
+// #define LD_LOADER "/lib64/ld-linux-x86-64.so.2"
+// #endif
+// const char ld_loader[] __attribute__((section(".interp"), unused)) = LD_LOADER;

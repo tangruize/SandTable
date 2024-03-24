@@ -6,9 +6,17 @@
 #include "mytime.h"
 #include "timing.h"
 
-MAKE_SYS_TEMPLATE(time_t, time, time_t *tloc) {
+#ifdef __linux__
+#define TIME_NR_NAME CUR_SYSCALL
+#define TEMPLATE MAKE_SYS_TEMPLATE
+#elif defined(__unix__)
+#define TIME_NR_NAME LIB_time
+#define TEMPLATE MAKE_LIB_TEMPLATE
+#endif
+
+TEMPLATE(time_t, time, time_t *tloc) {
     CLOCK_START_RECORD;
-    if (!check_count_intercepted(CUR_SYSCALL))
+    if (!check_count_intercepted(TIME_NR_NAME))
         return real_time(tloc);
     struct timespec mono = increase_time(NULL);
     struct timespec real_current_time = get_real_time_after(&mono);
@@ -18,8 +26,8 @@ MAKE_SYS_TEMPLATE(time_t, time, time_t *tloc) {
             return -1;
         *tloc = ret;
     }
-//    count_concerned(CUR_SYSCALL);
-    LOG_INTERCEPTED(CUR_SYSCALL, "ret %ld, time(tloc: %p)", ret, tloc);
+//    count_concerned(TIME_NR_NAME);
+    LOG_INTERCEPTED(TIME_NR_NAME, "ret %ld, time(tloc: %p)", ret, tloc);
     CLOCK_END_RECORD;
     return ret;
 }

@@ -5,10 +5,10 @@
 #ifndef MYSYSCALL_MYACCEPT_H
 #define MYSYSCALL_MYACCEPT_H
 
-#ifndef _SYS_SOCKET_H
-#define _SYS_SOCKET_H
-#endif
-#include <bits/socket.h>
+//#ifndef _SYS_SOCKET_H
+//#define _SYS_SOCKET_H
+//#endif
+#include <sys/socket.h>
 
 int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 

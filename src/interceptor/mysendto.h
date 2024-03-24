@@ -5,10 +5,10 @@
 #ifndef MYSYSCALL_MYSENDTO_H
 #define MYSYSCALL_MYSENDTO_H
 
-#ifndef _SYS_SOCKET_H
-#define _SYS_SOCKET_H
-#endif
-#include <bits/socket.h>  // struct sockaddr, socklen_t
+//#ifndef _SYS_SOCKET_H
+//#define _SYS_SOCKET_H
+//#endif
+#include <sys/socket.h>  // struct sockaddr, socklen_t
 #include <time.h>
 
 // if the sendto msg is concerned, send the hacked_sendto_header first before send real contents

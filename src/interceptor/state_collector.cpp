@@ -2,7 +2,6 @@
 // Created by fedora on 8/26/23.
 //
 
-
 #include <string>
 #include <map>
 #include <sstream>
@@ -21,6 +20,7 @@ extern "C" {
 #include "config.h"
 #include "common.h"
 #include "state_collector.h"
+#include "mysyscall.h"
 #include <sys/wait.h>
 
 static pthread_mutex_t state_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -47,7 +47,7 @@ char* get_state(const char* var) {
 }
 
 void write_log(int fd, const char *buf, size_t count) {
-    if (syscall(SYS_write, fd, buf, count) == -1) {
+    if (_syscall_(SYS_write, fd, buf, count) == -1) {
         print_info("WARN: failed to write log fd %d, size %d\n", fd, count);
         return;
     }
@@ -64,7 +64,7 @@ int collect_states() {
     last_log_buf.clear();
     pthread_mutex_unlock(&state_mutex);
     ssize_t ret;
-    ret = syscall(SYS_write, collector_childinfo.to_child, last_log_buf_tmp.c_str(), last_log_buf_tmp.size());
+    ret = _syscall_(SYS_write, collector_childinfo.to_child, last_log_buf_tmp.c_str(), last_log_buf_tmp.size());
     if (ret == -1) {
         print_info("WARN: failed to write state collector pipe: %s\n", strerror(errno));
         return false;

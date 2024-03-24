@@ -17,6 +17,7 @@ extern "C" {
 #include "mysendto.h"
 #include "timing.h"
 #include "state_collector.h"
+#include "mysyscall.h"
 #include <unistd.h>
 #include <sys/ioctl.h>
 
@@ -76,7 +77,7 @@ static void ack_cmd(int fd, int status) {
     send_buf.resize(4);
     *(uint32_t *)&send_buf.front() = htonl(status_str.length());
     send_buf += status_str;
-    ssize_t ret = syscall(SYS_write, fd, send_buf.c_str(), send_buf.length());
+    ssize_t ret = _syscall_(SYS_write, fd, send_buf.c_str(), send_buf.length());
     if (ret != (ssize_t)send_buf.length()) {
         print_info("WARN: ack controller cmd failed, return value: %ld\n", ret);
     }
@@ -108,7 +109,8 @@ static int check_has_recv_queue(const vector<string> &tokens) {
     return 2;
 }
 
-static int state_collect(__attribute_maybe_unused__ const vector<string> &_) {
+static int state_collect(const vector<string> &tokens) {
+    UNUSED(tokens);
     bool ok = collect_states();
     if (ok)
         return 0;
@@ -136,7 +138,7 @@ static int state_get(const vector<string> &tokens) {
     return status;
 }
 
-static int print_comments(__attribute_maybe_unused__ const vector<string> &tokens) {
+static int print_comments(const vector<string> &tokens) {
 //    if (!tokens.empty()) {
 //        print_info("%s", tokens[0].c_str());
 //    }
@@ -144,6 +146,7 @@ static int print_comments(__attribute_maybe_unused__ const vector<string> &token
 //        print_info_no_prompt(" %s", tokens[i].c_str());
 //    }
 //    print_info_no_prompt("\n");
+    UNUSED(tokens);
     return 0;
 }
 
@@ -165,14 +168,14 @@ static void do_router_cmd() {
     struct hacked_sendto_header *header = (hacked_sendto_header *) (&cmd_buffer.front());
     CLOCK_END_RECORD2;
     
-    while ((size = syscall(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), sizeof(hacked_sendto_header), MSG_WAITALL, 0, 0)) > 0) {
+    while ((size = _syscall_(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), sizeof(hacked_sendto_header), MSG_WAITALL, 0, 0)) > 0) {
 //        print_info("validation: %x\n", ntohl(header->validation));
         CLOCK_START_RECORD;
         assert(ntohl(header->validation) == VALIDATE_STR);
         size = ntohl(header->size);
         if (size >= (ssize_t)cmd_buffer.size())
             cmd_buffer.resize(size + 1);
-        size = syscall(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), size, MSG_WAITALL, 0, 0);
+        size = _syscall_(SYS_recvfrom, router_sockfd, &cmd_buffer.front(), size, MSG_WAITALL, 0, 0);
         if (size <= 0) {
             break;
         }
@@ -195,18 +198,18 @@ static void do_router_cmd() {
         CLOCK_END_RECORD;
     }
     if (size == 0) {
-        syscall(SYS_close, router_sockfd);
-        // disable all syscall interceptions to prevent other thread calling destructed global variables (as possible)
+        _syscall_(SYS_close, router_sockfd);
+        // disable all _syscall_ interceptions to prevent other thread calling destructed global variables (as possible)
         for (int i = 0; i < NR_REG_FUNC_DICT; i++) {
             reg_func_dict[i].state = (STATE_DISABLED | (reg_func_dict[i].state & STATE_LIBRARY));
         }
         print_info("Router socket is closed, exiting ..\n");
-        // currently, we set on_exit functions, so we use exit instead of _exit() syscall.
-        // this can lead to process corruption in race conditions (if an intercepted syscall using destructed global variables)
+        // currently, we set on_exit functions, so we use exit instead of _exit() _syscall_.
+        // this can lead to process corruption in race conditions (if an intercepted _syscall_ using destructed global variables)
         //exit(0);
         _exit(0);
     } else {
-        syscall(SYS_close, router_sockfd);
+        _syscall_(SYS_close, router_sockfd);
         print_info("Router socket recv failed: %s\n", strerror(errno));
     }
 }
@@ -225,13 +228,13 @@ int connect_router(const char *addr) {
     print_info_no_prompt("  - router "
     ADDR_FMT
     "\n", ADDR_TO_STR(&router));
-    router_sockfd = (int)syscall(SYS_socket, AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0);
+    router_sockfd = (int)_syscall_(SYS_socket, AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0);
     if (router_sockfd == -1) {
         print_info_no_prompt("    - WARN: socket: %s\n", strerror(errno));
         return false;
     }
     int retry_times = 3;
-    while (syscall(SYS_connect, router_sockfd, (struct sockaddr *) &router, sizeof(router)) != 0) {
+    while (_syscall_(SYS_connect, router_sockfd, (struct sockaddr *) &router, sizeof(router)) != 0) {
         sleep(1); // retry
         retry_times--;
         if (!retry_times) {
@@ -239,8 +242,8 @@ int connect_router(const char *addr) {
             return false;
         }
     }
-    if (syscall(SYS_dup2, router_sockfd, ROUTER_FD) != -1) {
-        syscall(SYS_close, router_sockfd);
+    if (_syscall_(SYS_dup2, router_sockfd, ROUTER_FD) != -1) {
+        _syscall_(SYS_close, router_sockfd);
         router_sockfd = ROUTER_FD;
     }
     std::thread(do_router_cmd).detach();
