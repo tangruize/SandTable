@@ -40,4 +40,4 @@ RUN apt-get install -y cmake build-essential libgflags-dev libreadline-dev libco
 FROM builder as controller
 RUN apt-get install -y lsof tmux jq
 COPY requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+RUN pip install -r /requirements.txt && rm -f /requirements.txt
