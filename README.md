@@ -1,53 +1,52 @@
-# SandTable
+# SandTable: Scalable Distributed System Model Checking with Specification-Level State Exploration
 
-NOTICE: This repository is currently under construction and contains only Xraft and Xraft-KVStore. We will update other systems soon.
+## Overview
 
-## Build
+SandTable is a technique for lifting state-space exploration of distributed system model checking from the implementation level to the specification level, and confirming bugs at the implementation level.
+SandTable has been applied to 8 distributed systems that implement consensus protocols such as Raft and Zab, where it found 23 bugs in total, with 18 new bugs, 17 confirmed and 13 fixed.
+For details, please refer to the `SandTable` paper:
 
-To avoid dependency issues, we recommend using an LXD container to run SandTable. Below is an example of creating an Ubuntu LXD container:
+**[SandTable: Scalable Distributed System Model Checking with Specification-Level State Exploration](https://doi.org/10.1145/3627703.3650077)**<br>
+In Proceedings of the 19th European Conference on Computer Systems (EuroSys'24), Athens, Greece, Apr. 2024.
 
-```sh
-sudo snap install lxd
-sudo lxd init --auto
-lxc init ubuntu:22.04 ubuntu22
-lxc config set ubuntu22 security.nesting=true
-lxc start ubuntu22
-lxc shell ubuntu22  # Enter ubuntu22 shell
-```
+Please cite the paper if you use the code.
 
-Install dependencies (inside ubuntu22):
+<!--
+## Getting started
 
-```sh
-sudo apt-get update
-sudo apt-get install -y docker.io docker-compose git iptables make jq
-```
+Before utilizing SandTable for checking distributed systems, users are required to write the specification of the core protocol. We provide detailed steps on how to use SandTable [here](TO-FILL.md). We are actively working on simplifying this process to make it more user-friendly.
+-->
 
-Build:
+## Demo
 
-```sh
-git clone https://github.com/tangruize/SandTable.git
-cd SandTable
-make start-docker
-#make stop-docker  # To stop docker
-```
+To demonstrate SandTable's bug-finding capabilities, we reproduce one of the new bugs discovered by SandTable. For a detailed installation tutorial, please refer to [Install.md](doc/Install.md), for detailed reproduced bugs, please see [Reproduce-Bugs.md](doc/Reproduce-Bugs.md).
 
-## Replay Bugs
-
-Check Xraft#1 (violates election safety):
+First, install necessary dependencies on Ubuntu (version >= 20.04):
 
 ```sh
-make check_xraft_election_bug
+sudo apt-get install -y docker.io docker-compose rsync git iptables make jq
 ```
 
-Replay Xraft#1:
+Then, build and start docker:
+
+```sh
+make build-docker && make start-docker
+```
+
+To reproduce the multiple valid leader bug in Xraft, execute the following command:
 
 ```sh
 make replay_xraft_election_bug
 ```
 
-Check and Replay Xraft-KV#1 (violates linearizability):
+After replay, it will provide information about the bug, indicating two servers becoming leaders with the same term:
 
-```sh
-make check_xraft_kv_linearizability_bug
-make replay_xraft_kv_linearizability_bug
+```txt
+grep -r "become leader, term" build/mount/systems/Xraft-series/bugs/election_safety/test/log*
+build/mount/systems/Xraft-series/bugs/election_safety/test/log.1:2022-06-04 05:36:58.200 [node] INFO  node.NodeImpl - become leader, term 2
+build/mount/systems/Xraft-series/bugs/election_safety/test/log.3:2022-06-04 05:36:54.100 [node] INFO  node.NodeImpl - become leader, term 2
 ```
+
+## Contributing
+
+Thank you for your interest in SandTable! We highly appreciate all feedback and contributions. If you wish to file a bug or enhancement proposal or have other questions, please use the Github [Issue](https://github.com/tangruize/SandTable/issues/new). If you'd like to contribute code, please open a Pull Request.

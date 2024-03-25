@@ -31,6 +31,8 @@ lxc storage create btrfs btrfs size=40GiB
 To initialize an Ubuntu 22.04 LXD container:
 
 ```sh
+## We can change a fast mirror and use `mirror-ubuntu:22.04` instead of `ubuntu:22.04`. For example:
+#lxc remote add mirror-ubuntu https://mirrors.nju.edu.cn/ubuntu-cloud-images/releases/ --protocol=simplestreams --public
 ## If we manually created a btrfs driver, add `-s btrfs` option after the `lxc init ..` command
 ## Note that the virtual machine image version in LXD has problems running SandTable, so do not add `--vm` option after `lxc init ..`
 lxc init ubuntu:22.04 sandtable-lxc # -s btrfs
@@ -71,7 +73,7 @@ make start-docker
 
 ## Reproducing bugs
 
-Here we provide some examples to reproduce bugs. For details, please refer to [TO-FILL](./to-fill.md)
+Here we provide some examples to reproduce bugs. For details, please refer to [Reproduce-Bugs.md](./Reproduce-Bugs.md)
 
 The Makefile targets start with `check-` are designed for checking bugs at the specification level.
 For example, to check the Xraft multiple valid Leader bug (inside sandtable-lxc):
