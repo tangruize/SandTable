@@ -1,22 +1,23 @@
-# Set up OpenBSD nodes
+# Setting Up OpenBSD Nodes
 
-The interceptor of SandTable supports intercept POSIX APIs, we give an example of running interceptor on OpenBSD virtual machines.
+The interceptor of SandTable supports intercepting POSIX APIs. Below, we provide an example of running the interceptor on OpenBSD virtual machines.
 
-The benefit of running interceptor on OpenBSD: Some languages (like Golang) bypasses system calls from libc for performance on Linux, which makes SandTable's interceptor unable to intercept programs written in such languages. On OpenBSD, bypassing system calls from libc is prohibited, thus, SandTable's interceptor can always functioning on OpenBSD.
+The benefit of running the interceptor on OpenBSD: Some languages (like Golang) bypass system calls from libc for performance on Linux, rendering SandTable's interceptor unable to intercept programs written in such languages. On OpenBSD, bypassing system calls from libc is prohibited, thus ensuring SandTable's interceptor can always function effectively.
 
 ## Installing OpenBSD on LXD
 
-We will reuse the sandtable-lxc container (please refer to [Install.md](./Install.md)) to run SandTable's engine (i.e., src/controller) and install OpenBSD on LXD to run SandTable's interceptor.
+We will reuse the `sandtable-lxc` container (please refer to [Install.md](./Install.md)) to run SandTable's engine (i.e., `src/controller`) and install OpenBSD on LXD to run SandTable's interceptor.
 
-If your host cannot install dependencies in this tutorial, you can initialize LXD inside the sandtable-lxc container:
+<details>
+<summary>If your host cannot install dependencies in this tutorial, you can initialize LXD inside the sandtable-lxc container.</summary>
 
 ```bash
 ## (Execute on host)
 ## nesting for running nested containers
 lxc config set sandtable-lxc security.nesting=true
-## unconfined apparmor for LXD to start qemu with extra boot device
+## unconfined apparmor for LXD to start qemu with an extra boot device
 lxc config set sandtable-lxc raw.lxc="lxc.apparmor.profile=unconfined"
-## privileged for LXD to initialize network if apparmor is unconfined, and for BTRFS to get full permissions
+## privileged for LXD to initialize the network if apparmor is unconfined, and for BTRFS to get full permissions
 lxc config set sandtable-lxc security.privileged=true 
 ## pass devices related to LXD VM through sandtable-lxc
 for device in kvm vsock vhost-net vhost-vsock; do lxc config device add sandtable-lxc $device unix-char path=/dev/$device mode=0666; done
@@ -26,14 +27,17 @@ for device in kvm vsock vhost-net vhost-vsock; do lxc config device add sandtabl
 ## The ubuntu:22.04 image has preinstalled LXD
 #sudo snap refresh lxd --channel=latest/stable
 ## Initialize LXD (inside sandtable-lxc)
-### Choose *BTRFS* or DIR storage, do not choose ZFS as nested LXD has issues in creating VMs in ZFS
+### Choose BTRFS storage is available, otherwise choose DIR.
+### Do not choose ZFS as nested LXD has issues in creating VMs in ZFS
 sudo lxd init
 ## Create a nested sandtable-lxc container
 lxc init ubuntu:22.04 sandtable-lxc
 ## Now treat the host/sandtable-lxc container as host and host/sandtable-lxc/sandtable-lxc as sandtable-lxc
 ```
 
-Below are instructions to create an OpenBSD virtual machine on LXD (Execute on host, thanks the excellent [tutorial](https://tobhe.de/stuff/lxd-openbsd.html)):
+</details>
+
+Below are instructions to create an OpenBSD virtual machine on LXD (Execute on host, thanks to the excellent [tutorial](https://tobhe.de/stuff/lxd-openbsd.html)):
 
 ```bash
 ## Init an empty virtual machine
@@ -43,13 +47,13 @@ lxc config device override n1 root size=20GiB
 ## Fetch OpenBSD installer
 wget https://ftp.openbsd.org/pub/OpenBSD/7.4/amd64/install74.img
 #wget https://mirrors.tuna.tsinghua.edu.cn/OpenBSD/7.4/amd64/install74.img  ## a mirror site
-## Mount the installer image as boot disk
+## Mount the installer image as the boot disk
 lxc config device add n1 install disk source=$(realpath install74.img) boot.priority=10
 ## Start OpenBSD to install it
 lxc start n1 --console
 ```
 
-Manually configure the correct serial output device, otherwise the OS won't print any output to our attached text console:
+Manually configure the correct serial output device, otherwise the OS won't print any output to our attached text console (Tip: enter the `set tty com0` command as quick as possible):
 
 ```txt
 >> OpenBSD/amd64 BOOTX64 3.65
@@ -64,7 +68,7 @@ Welcome to the OpenBSD/amd64 7.4 installation program.
 (I)nstall, (U)pgrade, (A)utoinstall or (S)hell? I
 ```
 
-Most answers will depend on your personal preference. Usually choosing default is a good choice. Make sure to change the default console to com0 and pick a reasonable baud rate, start sshd by default and allow root ssh login.
+Most answers will depend on your personal preference. Usually choosing the default is a good choice. Make sure to change the default console to com0 and pick a reasonable baud rate, start sshd by default, and allow root ssh login.
 
 ```txt
 System hostname? (short form, e.g. 'foo') sandtable-node
@@ -105,7 +109,7 @@ lxc start n1
 
 ## Configure Shared Directories
 
-Install SSH and configure SSH root login (inside sandtable-lxc: in this tutorial use `lxc shell sandtable-lxc` to run as root):
+Install SSH and configure SSH root login (inside sandtable-lxc, in this tutorial use `lxc shell sandtable-lxc` to run as root):
 
 ```sh
 sudo apt-get update
@@ -151,11 +155,11 @@ Configure shared directory for sandtable-lxc (on host):
 lxc config device add sandtable-lxc sandtable disk source=$(realpath build/mount) path=/root/sandtable shift=true
 ```
 
-SSH to OpenBSD (To resolve n1.lxd on host: [How to integrate with systemd-resolved](https://documentation.ubuntu.com/lxd/en/stable-5.0/howto/network_bridge_resolved/). Note that the DNS resolve configuration on host is optional because SandTable will run on the `sandtable-lxc` container, which can automatically resolve other LXD hostnames such as the OpenBSD VM node `n1`):
+SSH to OpenBSD (which in this case is `n1.lxd`. If `n1.lxd` cannot be [resolved](https://documentation.ubuntu.com/lxd/en/stable-5.0/howto/network_bridge_resolved/), you can use the IPv4 address instead):
 
 ```sh
 ssh root@n1.lxd
-# If n1.lxd cannot be resolved, we can use the IPv4 address
+# If n1.lxd cannot be resolved, use the IPv4 address
 ssh root@$(lxc info n1 | sed -En '/inet:/s/.* ([0-9.]+).*/\1/p')
 ```
 
@@ -165,7 +169,7 @@ Install sshfs for mounting shared directory (on OpenBSD):
 pkg_add sshfs
 ```
 
-Configure sshfs auto mount (on OpenBSD):
+Configure sshfs for auto-mounting (on OpenBSD):
 
 ```sh
 (crontab -l 2>/dev/null; echo "@reboot /bin/mkdir -p /root/sandtable && /usr/local/bin/sshfs -o allow_other,reconnect,IdentityFile=/root/.ssh/id_rsa root@sandtable-lxc:/root/sandtable /root/sandtable") | crontab -
@@ -173,14 +177,14 @@ Configure sshfs auto mount (on OpenBSD):
 
 ## Build SandTable
 
-Install build essential toolchains for SandTable engine (i.e., src/controller) (inside sandtable-lxc):
+Install the essential toolchains for building the SandTable engine (i.e., `src/controller`) (inside sandtable-lxc):
 
 ```sh
 sudo apt-get update
 sudo apt-get install -y cmake build-essential libgflags-dev libreadline-dev libconcurrentqueue-dev
 ```
 
-Build engine (inside sandtable-lxc):
+Build the engine (inside sandtable-lxc):
 
 ```sh
 cd /root/sandtable
@@ -188,13 +192,13 @@ cmake -B cmake-build-debug/controller -S src/controller
 cmake --build cmake-build-debug/controller -j $(nproc)
 ```
 
-Install build essential toolchains for SandTable interceptor (inside OpenBSD):
+Install the essential toolchains for building the SandTable interceptor (inside OpenBSD):
 
 ```sh
 pkg_add g++ gcc cmake
 ```
 
-Build interceptor (inside OpenBSD):
+Build the interceptor (inside OpenBSD):
 
 ```sh
 cd /root/sandtable
@@ -204,13 +208,13 @@ cmake --build cmake-build-debug/interceptor -j $(sysctl hw.ncpu | awk -F= '{prin
 
 ## Replay Bugs
 
-Install packages on host:
+Install the necessary packages on host:
 
 ```sh
 sudo apt-get install -y nftables iptables jq
 ```
 
-Install packages of controller target defined in [Dockerfile](../docker/Dockerfile) (inside sandtable-lxc):
+Install the packages of the engine defined in [Dockerfile](../docker/Dockerfile) (inside sandtable-lxc):
 
 ```sh
 sudo apt-get install -y iproute2 iptables ssh dnsutils python3 python-is-python3 python3-pip openjdk-19-jre-headless
@@ -218,14 +222,14 @@ sudo apt-get install -y lsof tmux jq
 sudo -H pip install jq requests inotify psutil
 ```
 
-Configure TPROXY on host:
+Configure TPROXY (on host):
 
 ```sh
 make unconfig-network-lxd
 make config-network-lxd
 ```
 
-The dependencies on each node to run interceptor is depended on the target systems to run. For example, to run PySyncObj, we need to install python3 on OpenBSD:
+The dependencies required on each node to run the interceptor depend on the target systems. For example, to run PySyncObj, python3 needs to be installed on OpenBSD:
 
 ```sh
 pkg_add python3
@@ -240,3 +244,11 @@ lxc copy n1 n3
 lxc start n1 n2 n3
 ```
 
+Reply PySyncObj bugs (execute on host):
+
+```sh
+make BACKEND=lxc replay_pysyncobj_leader_commits_older_terms_bug
+make BACKEND=lxc replay_pysyncobj_non_monotonic_commit_idx_bug
+make BACKEND=lxc replay_pysyncobj_next_idx_no_greater_than_match_idx_bug
+make BACKEND=lxc replay_pysyncobj_non_monotonic_match_idx_bug
+```

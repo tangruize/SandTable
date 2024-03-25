@@ -1,24 +1,24 @@
-# Install
+# Installation
 
 Below are the directions to install and run SandTable.
 
-We recommend running SandTable on a fresh Ubuntu environment (at least 20.04, recommend >= 22.04). Setting up a Ubuntu 22.04 container using LXD is simple. However, LXD is not always necessary if your system is already running Ubuntu 20.04 or a more recent version.
+We recommend running SandTable on a fresh Ubuntu environment (at least 20.04, preferably version 22.04 or later). Setting up an Ubuntu 22.04 container using LXD is simple. However, LXD is not always necessary if your system already runs Ubuntu 20.04 or a more recent version.
 
-## Run SandTable inside an Ubuntu 22.04 LXD container
+## Running SandTable inside an Ubuntu 22.04 LXD container
 
 We recommend using an LXD container to run SandTable to avoid dependency issues. If you prefer not to install LXD, you can treat your Linux host as the container `sandtable-lxc`.
 
 If you do not have a Linux environment to run LXD yet, please refer to [Install-Linux.md](./Install-Linux.md).
 
-### Install and configure LXD container
+### Installing and configuring LXD container
 
-Install and configure LXD:
+To install and configure LXD, follow these steps:
 
 ```sh
 sudo snap install lxd
 ## For storage drivers. It is OK to install one of them (e.g., ZFS is not supported on WSL2)
 sudo apt-get install zfsutils-linux btrfs-progs
-## Choose default for most options. For storage, if Ubuntu host >= 23.10, choose ZFS, otherwise choose BTRFS
+## Choose the default for most options. For storage, if Ubuntu host >= 23.10, choose ZFS; otherwise choose BTRFS
 sudo lxd init
 ## Ensure the current user is added to the lxd group
 sudo usermod -a -G lxd "$USER"  # log out and re-login
@@ -28,7 +28,7 @@ lxc storage list  # the DRIVER should be `zfs` or `btrfs`
 lxc storage create btrfs btrfs size=40GiB
 ```
 
-Initialize an Ubuntu 22.04 LXD container:
+To initialize an Ubuntu 22.04 LXD container:
 
 ```sh
 ## If we manually created a btrfs driver, add `-s btrfs` option after the `lxc init ..` command
@@ -41,16 +41,18 @@ lxc start sandtable-lxc
 lxc exec sandtable-lxc -- su -l ubuntu
 ```
 
-### Configure SandTable
+### Configuring SandTable
 
-Install dependencies (inside sandtable-lxc):
+In this section, we'll configure SandTable on Docker. For detailed configuration processes on other POSIX systems like OpenBSD, please refer to [Install-OpenBSD.md](./Install-OpenBSD.md).
+
+To install dependencies (inside sandtable-lxc):
 
 ```sh
 sudo apt-get update
 sudo apt-get install -y docker.io docker-compose rsync git iptables make jq
 ```
 
-Build docker (inside sandtable-lxc):
+To build Docker (inside sandtable-lxc):
 
 ```sh
 ## Ensure the current user is added to the docker group
@@ -60,19 +62,19 @@ cd SandTable
 make build-docker
 ```
 
-Start docker (inside sandtable-lxc):
+To start Docker (inside sandtable-lxc):
 
 ```sh
 ## It will automatically compile SandTable and configure TPROXY
 make start-docker
 ```
 
-## Reproduce bugs
+## Reproducing bugs
 
 Here we provide some examples to reproduce bugs. For details, please refer to [TO-FILL](./to-fill.md)
 
-To check bugs at the specification level, the Makefile targets start with `check-`.
-For example, to check the Xraft multiple valid Leader bug:
+The Makefile targets start with `check-` are designed for checking bugs at the specification level.
+For example, to check the Xraft multiple valid Leader bug (inside sandtable-lxc):
 
 ```sh
 make check_xraft_election_safety_bug
@@ -91,8 +93,8 @@ It will display the bug trace (which may differ from the following):
 ["RecvRequestVoteResponse","become leader","n3","n2"]
 ```
 
-To replay bugs at the implementation level, the Makefile targets start with `replay-`.
-For example, to replay the Xraft multiple valid Leader bug:
+The Makefile targets start with `replay-` is designed for replaying bugs at the implementation level.
+For example, to replay the Xraft multiple valid Leader bug (inside sandtable-lxc):
 
 ```sh
 make replay_xraft_election_safety_bug

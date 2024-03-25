@@ -1,27 +1,27 @@
-# Set up a Linux environment
+# Setting Up a Linux Environment
 
-The Linux environment must fulfill the following requirements: it should be capable of installing snapd (for LXD installation) and have a kernel version of at least 4.18 (to support TPROXY). It is advisable to have a kernel version of at least 5.19 (to support OverlayFS IDMAPPED layers) for Docker to function optimally inside LXD containers.
+The Linux environment must meet the following requirements: it should be capable of installing snapd (for LXD installation) and have a kernel version of at least 4.18 (to support TPROXY). It is advisable to have a kernel version of at least 5.19 (to support OverlayFS IDMAPPED layers) for Docker to function optimally inside LXD containers.
 
-If you are already using a Linux host, you can skip this section.
+If you are already using a Linux host, you can skip this tutorial.
 
 ## Installing Ubuntu on Host/VirtualBox
 
-Download Ubuntu 24.04 iso or Ubuntu 22.04 iso and install it on a physical or virtual machine (e.g., VirtualBox).
+Download the Ubuntu 24.04 installer iso or Ubuntu 22.04 iso and install it on a physical or virtual machine (e.g., VirtualBox).
 
-Tip: The graphical installation guide of Ubuntu>=22.04 supports installing root filesystem on ZFS (Erase disk and use ZFS), which works better with LXD compared to EXT4. For enhanced ZFS functionality, it is recommended to install ZFS 2.2 (to support ZFS delegation), which is available on Ubuntu 23.10 and 24.04.
+Tip: The graphical installation guide of Ubuntu>=22.04 supports installing the root filesystem on ZFS (Erase disk and use ZFS), which works better with LXD compared to EXT4. For enhanced ZFS functionality, it is recommended to install ZFS>=2.2 (to support ZFS delegation), which is available on Ubuntu 23.10 and 24.04.
 
 ## Installing Ubuntu 22.04 on WSL2
 
 Search for Ubuntu on the Microsoft Store and install Ubuntu 22.04.3 LTS.
 
-Currently, the official WSL2 kernel does not have TPROXY configured, and the version is 5.15. To enable TPROXY and improve Docker performance, we need to configure and compile the WSL2 kernel.
+Currently, the official WSL2 kernel does not have TPROXY configured, and the version is 5.15. To enable TPROXY and improve Docker performance inside LXD, we need to configure and compile the WSL2 kernel.
 
 ```bash
 git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
 cd WSL2-Linux-Kernel
 git checkout linux-msft-wsl-6.1.y
 cp Microsoft/config-wsl .config
-## We do not config ZFS because ZFS does not directly support to run inside a container (the real root directory is masked due to mount namespaces).
+## We do not config ZFS because ZFS does not directly support to run inside a container (due to mount namespaces).
 ## Linux distributions run as isolated containers inside of the WSL 2 managed VM.
 cat <<EOF >>.config
 # To support TPROXY
