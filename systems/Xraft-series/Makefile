@@ -20,3 +20,4 @@ check_xraft_kv_linearizability_bug:
 
 replay_xraft_kv_linearizability_bug:
 	make _replay_xraft_series_bug BUG_DIR=linearizability N_SERVERS=3
+	grep "result:" build/mount/systems/Xraft-series/bugs/linearizability/test/log.host

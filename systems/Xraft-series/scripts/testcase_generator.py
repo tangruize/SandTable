@@ -142,7 +142,7 @@ def yield_trace(states):
     def compare(n, code_var_name, model_var_name, no_compare=False):
         pass  # do not compare in xraft
     def do_tick(n, is_compare=True):
-        yield ['sleep', '500']  # sleep 1s to wait the node processing
+        yield ['sleep', '2000']  # sleep 2s to wait the node processing
     def deliver(src, dst):
         yield ['deliver', src, dst]
         # yield ['loop', 'intercept', dst, 'check_has_recv_queue', src]
@@ -153,7 +153,7 @@ def yield_trace(states):
             if prev_state is not None:
                 if prev_state['state'][dst] != cur_state['state'][dst]:
                     yield ['intercept', dst, 'state_collect']
-                    yield ['sleep', str(100)]
+                    yield ['sleep', str(400)]
                     yield ['#', 'variable', 'state', dst, cur_state['state'][dst]]
                     yield ['intercept', dst, 'state_get', 'state']
                     yield ['compare', 'variable']
@@ -162,7 +162,7 @@ def yield_trace(states):
                     yield ['compare', 'variable']
                 if cur_state['netcmd'][0][0] in {'RecvAppendentriesResponse', 'RecvAppendentries'} and cur_state['netcmd'][0][1] in {'success', 'success retry'}:
                     yield ['intercept', dst, 'state_collect']
-                    yield ['sleep', str(100)]
+                    yield ['sleep', str(400)]
                     yield ['#', 'variable', 'commit_idx', dst, str(cur_state['commit_idx'][dst])]
                     yield ['intercept', dst, 'state_get', 'commit_idx']
                     yield ['compare', 'variable']
@@ -215,7 +215,7 @@ def yield_trace(states):
                     # pass
                     yield ['intercept', comment[1], 'inc_time_ms', '10'] # > ? (logReplicationReadTimeout)
                     yield ['shell', '-nonblocking', cli_path, comment[1], 'put', comment[2]]
-                    yield ['sleep', '1000']  # wait it execute
+                    yield ['sleep', '2000']  # wait it execute
                 yield from do_tick(comment[1])
             elif cmd == 'msg_batch_add_reply':  # recv msg and batch send msgs
                 # yield ['deliver', parameters[1], parameters[0]]
@@ -224,7 +224,7 @@ def yield_trace(states):
         else:
             if comment[0] == 'Init':
                 yield ['init', str(i[0][1])]
-                yield ['sleep', '10000']  # sleep 5 seconds to wait nodes init
+                yield ['sleep', '15000']  # sleep 15 seconds to wait nodes init
                 # for j in nodes:
                 #     yield from do_tick(j)
             elif comment[0] == 'ClientGetValue':
