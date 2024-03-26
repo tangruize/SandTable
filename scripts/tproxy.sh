@@ -86,7 +86,7 @@ function get_controller_ip() {
 
 function get_ip_interface() {
     local controller_ip=$1
-    ip route get "$controller_ip" | head -1 | cut -d' ' -f3
+    ip route get "$controller_ip" 2>/dev/null | head -1 | cut -d' ' -f3
 }
 
 function check_root_permissoin() {

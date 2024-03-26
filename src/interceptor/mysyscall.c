@@ -26,7 +26,7 @@ MAKE_LIB_TEMPLATE(SYSCALL_FUNC_TYPE, syscall, SYSCALL_FUNC_TYPE number, ...) {
 
     if (check_count_intercepted(LIB_syscall)) {
         count_intercepted(number);
-        LOG_INTERCEPTED(LIB_syscall, "concerned counter: syscall(number: %d)", number);
+        // LOG_INTERCEPTED(LIB_syscall, "concerned counter: syscall(number: %d)", number);
     }
     return real_syscall(number, a, b, c, d, e, f);
 }

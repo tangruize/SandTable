@@ -20,13 +20,13 @@ check_raftos_commitment_not_advanced_bug:
 replay_raftos_commitment_not_advanced_bug:
 	make _replay_raftos_bug BUG_DIR=commitment_not_advanced N_SERVERS=2
 
-check_incorrect_erasing_entries_bug:
+check_raftos_incorrect_erasing_entries_bug:
 	make _check_raftos_bug BUG_DIR=incorrect_erasing_entries
 
 replay_raftos_incorrect_erasing_entries_bug:
 	make _replay_raftos_bug BUG_DIR=incorrect_erasing_entries N_SERVERS=2
 
-check_non_monotonic_match_idx_bug:
+check_raftos_non_monotonic_match_idx_bug:
 	make _check_raftos_bug BUG_DIR=non_monotonic_match_idx
 
 replay_raftos_non_monotonic_match_idx_bug:
