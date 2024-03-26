@@ -6,20 +6,18 @@ SandTable is a technique for lifting state-space exploration of distributed syst
 SandTable has been applied to 8 distributed systems that implement consensus protocols such as Raft and Zab, where it found 23 bugs in total, with 18 new bugs, 17 confirmed and 13 fixed.
 For details, please refer to the `SandTable` paper:
 
-**[SandTable: Scalable Distributed System Model Checking with Specification-Level State Exploration](https://doi.org/10.1145/3627703.3650077)**<br>
-In Proceedings of the 19th European Conference on Computer Systems (EuroSys'24), Athens, Greece, Apr. 2024.
+**[SandTable: Scalable Distributed System Model Checking with Specification-Level State Exploration](doc/SandTable-Paper.pdf)**<br>
+In Proceedings of the 19th European Conference on Computer Systems (EuroSys'24), Athens, Greece, Apr. 2024. <https://doi.org/10.1145/3627703.3650077>
 
 Please cite the paper if you use the code.
 
-<!--
 ## Getting started
 
-Before utilizing SandTable for checking distributed systems, users are required to write the specification of the core protocol. We provide detailed steps on how to use SandTable [here](TO-FILL.md). We are actively working on simplifying this process to make it more user-friendly.
--->
+Before utilizing SandTable for checking distributed systems, users are required to write the specification of the core protocol. We provide detailed steps on how to use SandTable [here](doc/SandTable-Design.pdf) (in Chinese). We are actively working on simplifying this process to make it more user-friendly.
 
 ## Demo
 
-To demonstrate SandTable's bug-finding capabilities, we reproduce one of the new bugs discovered by SandTable. For a detailed installation tutorial, please refer to [Install.md](doc/Install.md), for detailed reproduced bugs, please see [Reproduce-Bugs.md](doc/Reproduce-Bugs.md).
+To demonstrate SandTable's bug-finding capabilities, we reproduce one of the new bugs discovered by SandTable. For a detailed installation tutorial, please refer to [Install.md](doc/Install.md). For detailed instructions to reproduce bugs, please see [Reproduce-Bugs.md](doc/Reproduce-Bugs.md). For detailed analysis of bugs, please see [Bugs-Descriptions.pdf](doc/Bugs-Descriptions.pdf) (in Chinese).
 
 First, install necessary dependencies on Ubuntu (version >= 20.04):
 
@@ -36,7 +34,7 @@ make build-docker && make start-docker
 To reproduce the multiple valid leader bug in Xraft, execute the following command:
 
 ```sh
-make replay_xraft_election_bug
+make replay_xraft_election_safety_bug
 ```
 
 After replay, it will provide information about the bug, indicating two servers becoming leaders with the same term:
